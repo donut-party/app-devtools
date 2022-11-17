@@ -19,7 +19,7 @@
   #_(require my.styles :reload)
   ;; Just writing out the CSS is enough, shadow will pick it up (make sure you
   ;; have a <link href=styles.css rel=stylesheet>)
-  (spit "resources/public/css/styles.css"
+  (spit "resources/donut/bakery/public/css/styles.css"
         (str
          ;; `defined-styles` takes a :preflight? flag, but we like to have some
          ;; style rules between the preflight and the components. This whole bit

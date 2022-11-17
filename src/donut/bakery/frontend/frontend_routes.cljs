@@ -1,20 +1,10 @@
 (ns donut.bakery.frontend.frontend-routes
   (:require
-   [reitit.coercion.malli :as rm]
-   [donut.frontend.form.flow :as dff]
    [donut.frontend.sync.flow :as dsf]
-   [donut.bakery.frontend.components.home :as h]
-   [donut.bakery.frontend.components.example-entity :as ee]))
+   [donut.bakery.frontend.components.home :as h]))
 
 (def routes
   [["/"
     {:name       :home
      :components {:main [h/component]}
-     :lifecycle  {:enter [[::dsf/get :example-entities]]}}]
-   ["/example-entities/{example_entity/id}"
-    {:name       :example-entity
-     :components {:main [ee/show]}
-     :coercion   rm/coercion
-     :lifecycle  {:enter [[::dff/clear {:donut.form/key [:post :example-entity]}]
-                          [::dsf/get :example-entity {::dsf/rules #{::dsf/merge-route-params}}]]}
-     :parameters {:path [:map [:example_entity/id int?]]}}]])
+     :lifecycle  {:enter [[::dsf/get :donut.bakery/endpoint-routes]]}}]])

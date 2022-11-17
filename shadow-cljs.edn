@@ -1,7 +1,7 @@
 ;; shadow-cljs configuration
 {:deps           {:aliases [:cljs :dev]}
- :dev-http       {3000 {:roots     ["resources/public" "frontend-target/dev/public"]
-                        :proxy-url "http://localhost:3010"}}
+ :dev-http       {3100 {:roots     ["resources/donut/bakery/public" "frontend-target/dev/public"]
+                        :proxy-url "http://localhost:3110"}}
  :cache-blockers #{lambdaisland.ornament}
 
  :builds {:dev

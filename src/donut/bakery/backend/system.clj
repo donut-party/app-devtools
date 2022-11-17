@@ -11,7 +11,7 @@
    [ring.adapter.jetty :as rj]))
 
 (defn env-config [& [profile-name]]
-  (-> "config/env.edn"
+  (-> "donut/bakery/config/env.edn"
       io/resource
       (aero/read-config (when profile-name {:profile profile-name}))
       (assoc :profile-name profile-name)))
@@ -39,6 +39,7 @@
      #::ds{:start  (fn [{:keys [::ds/config]}] (dh/handler config))
            :config {:db         (ds/ref [:db :connection])
                     :router     (ds/ref [:middleware :router])
+                    :routes     (ds/ref [:middleware :routes])
                     :middleware (ds/ref [:middleware :middleware])}}}
 
     :db

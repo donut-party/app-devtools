@@ -1,15 +1,17 @@
-(ns donut.bakery.backend.endpoint.endpoint-routes-endpoint)
-
-(def collection-parameters
-  {:path [:map
-          ;; example: [:todo_list/id int?]
-          ]})
+(ns donut.bakery.backend.endpoint.endpoint-routes-endpoint
+  (:require
+   [clojure.walk :as walk]))
 
 (def collection-handlers
   {:get
-   {:parameters collection-parameters
-    :handler
-    (fn [{:keys [routes]}]
+   {:handler
+    (fn collection-get [{:keys [routes]}]
       {:status 200
-       :body   [{:endpoint-routes/id :all
-                 :endpoint-routes/routes routes}]})}})
+       :body   [{:endpoint-routes/id     :all
+                 :endpoint-routes/routes (mapv (fn [[path opts]]
+                                                 [path (walk/postwalk (fn [x]
+                                                                        (if (fn? x)
+                                                                          "fn"
+                                                                          x))
+                                                                      opts)])
+                                               routes)}]})}})
