@@ -13,7 +13,7 @@
    [re-frame.core :as rf]
    [reagent.dom :as rdom]))
 
-(defmethod ds/named-system :frontend
+(defmethod ds/named-system :donut.bakery/frontend
   [_]
   (meta-merge/meta-merge
    dconf/default-config
@@ -22,15 +22,12 @@
      {:sync-router     #::ds{:config {:routes endpoint-routes/routes}}
       :frontend-router #::ds{:config {:routes frontend-routes/routes}}}}}))
 
-(defmethod ds/named-system :frontend-dev
+(defmethod ds/named-system :donut.bakery/frontend-dev
   [_]
-  (ds/system :frontend
-    ;; add dev routes
-    {[:donut.frontend :frontend-router ::ds/config :routes]
-     (into frontend-routes/routes [])}))
+  (ds/system :donut.bakery/frontend))
 
 (defn ^:dev/after-load start []
-  (rf/dispatch-sync [::dcf/start-system (ds/system :frontend-dev)])
+  (rf/dispatch-sync [::dcf/start-system (ds/system :donut.bakery/frontend-dev)])
   (rf/dispatch-sync [::dnf/dispatch-current])
   (rdom/render [app/app] (dcu/el-by-id "app")))
 

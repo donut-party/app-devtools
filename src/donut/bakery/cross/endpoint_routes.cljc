@@ -6,7 +6,7 @@
 
 (def routes
   (dr/merge-route-opts
-   [["/api/v1/endpoint-routes"
+   [["/donut/bakery/endpoint-routes"
      {:name     :donut.bakery/endpoint-routes
       :ent-type :endpoint-routes
       :id-key   :endpoint-routes/id}
