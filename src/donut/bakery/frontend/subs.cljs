@@ -6,4 +6,6 @@
 
 (rf/reg-sub :endpoint-routes
   (fn [db]
-    (dcu/entities db :endpoint-routes :endpoint-routes/id)))
+    (-> (dcu/entities db :endpoint-routes :endpoint-routes/id)
+        first
+        :endpoint-routes/routes)))

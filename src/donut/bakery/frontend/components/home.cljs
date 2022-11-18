@@ -4,8 +4,10 @@
    [re-frame.core :as rf]))
 
 (defn endpoint-row
-  [route]
-  [:tr [:td (str route)]])
+  [[path options]]
+  [:tr
+   [ui/td [ui/pppre path]]
+   [ui/td [ui/pppre options]]])
 
 (defn component
   []
@@ -13,6 +15,6 @@
    [ui/h1 "Donut Bakery 🍩"]
    [:div
     [ui/h2 "Backend Routes"]
-    [:table
+    [ui/table
      (into [:tbody]
            (map endpoint-row @(rf/subscribe [:endpoint-routes])))]]])

@@ -1,5 +1,6 @@
 (ns donut.bakery.frontend.ui
   (:require
+   [cljs.pprint :as pprint]
    [lambdaisland.ornament :as o]))
 
 (o/defstyled ul :div
@@ -57,3 +58,16 @@
   :mt-2
   ([& children]
    (into [:<>] children)))
+
+(o/defstyled table :table
+  :table-auto
+  :w-full
+  :mx-auto
+  :overflow-auto)
+
+(o/defstyled td :td
+  :p-3)
+
+(defn pppre
+  [x]
+  [:pre (with-out-str (pprint/pprint x))] )
