@@ -12,9 +12,10 @@
 (defn component
   []
   [:div
-   [ui/h1 "Donut Bakery 🍩"]
    [:div
-    [ui/h2 "Backend Routes"]
-    [ui/table
-     (into [:tbody]
-           (map endpoint-row @(rf/subscribe [:endpoint-routes])))]]])
+    [ui/h1 "Backend Routes"]
+
+    [:div {:class "p-4 bg-white mt-2"}
+     [ui/table
+      (into [:tbody]
+            (map endpoint-row @(rf/subscribe [:endpoint-routes])))]]]])

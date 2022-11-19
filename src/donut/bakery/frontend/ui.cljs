@@ -1,7 +1,8 @@
 (ns donut.bakery.frontend.ui
   (:require
    [cljs.pprint :as pprint]
-   [donut.frontend.nav.components :as dnc]))
+   [donut.frontend.nav.components :as dnc]
+   [react :as react]))
 
 (defn link
   [opts & children]
@@ -28,21 +29,22 @@
                     "mx-auto"
                     "overflow-auto"
                     "divide-y"
-                    "divide-gray-300"
-                    "ring-1"
-                    "ring-black"
-                    "ring-opacity-5"
-                    "rounded-md"
-                    "shadow"]}]
+                    "divide-slate-300"]}]
    children))
 
 (defn td
   [& children]
   (into [:td {:class "align-top p-3"}] children))
 
-(defn pppre
+(defn highlight
   [x]
+  (react/useEffect (fn []))
   [:div
    [:pre
     {:class "text-sm"}
-    (with-out-str (pprint/pprint x))]] )
+    [:code {:class                   "language-clojure"
+            :dangerouslySetInnerHTML {:__html (with-out-str (pprint/pprint x))}}]]])
+
+(defn pppre
+  [x]
+  [:f> highlight x] )

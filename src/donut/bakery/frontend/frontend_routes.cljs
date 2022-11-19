@@ -7,4 +7,14 @@
   [["/"
     {:name       :home
      :components {:main [h/component]}
+     :lifecycle  {:enter [[::dsf/get :donut.bakery/endpoint-routes]]}}]
+
+   ["/backend-endpoints"
+    {:name       :backend-endpoints
+     :components {:main [h/component]}
+     :lifecycle  {:enter [[::dsf/get :donut.bakery/endpoint-routes]]}}]
+
+   ["/database"
+    {:name       :database
+     :components {:main [h/component]}
      :lifecycle  {:enter [[::dsf/get :donut.bakery/endpoint-routes]]}}]])
