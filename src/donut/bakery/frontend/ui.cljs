@@ -1,73 +1,48 @@
 (ns donut.bakery.frontend.ui
   (:require
    [cljs.pprint :as pprint]
-   [lambdaisland.ornament :as o]))
+   [donut.frontend.nav.components :as dnc]))
 
-(o/defstyled ul :div
-  :my-3
-  {"--gi-divide-y-reverse" 0}
-  [:>.list-container :bg-white :shadow :overflow-hidden :sm:rounded-md]
-  [:>.list-container>ul :divide-y :divide-gray-200]
-  [:a :block :p-3]
-  ([list-items]
-   [:<>
-    (into
-     [:div.list-container
-      ;; todo what's the unwraping way to do this?
-      (->> list-items
-           (map (fn [li] [:li li]))
-           (into [:ul {:role "list" :class "divide-y"}]))])]))
+(defn link
+  [opts & children]
+  (into [dnc/simple-route-link (merge {:class "text-blue-600 hover:text-green-600 hover:bg-gray-50"} opts)]
+        children))
 
-(o/defstyled link :span
-  [:>a :text-blue-600 :hover:text-green-600 :hover:bg-gray-50]
-  ([link]
-   [:<> link]))
+(defn h1
+  [& children]
+  (into
+   [:h1 {:class "order-1 text-gray-9009 text-3xl font-extrabold tracking-tight mt-2"}]
+   children))
 
-(o/defstyled form :div
-  [:input
-   :shadow-sm
-   :focus:ring-indigo-500
-   :focus:border-indigo-500
-   :block
-   :w-full
-   :sm:text-sm
-   :border-gray-300
-   :rounded-md
-   :py-2
-   :px-3
-   ]
-  ([& children]
-   (into [:<>] children)))
+(defn h2
+  [& children]
+  (into
+   [:h1 {:class "order-1 text-gray-9009 text-2xl font-bold tracking-tight mt-2"}]
+   children))
 
-(o/defstyled h1 :h1
-  :order-1
-  :text-gray-900
-  :text-3xl
-  :font-extrabold
-  :tracking-tight
-  :mt-2
-  ([& children]
-   (into [:<>] children)))
+(defn table
+  [& children]
+  (into
+   [:table {:class ["table-auto"
+                    "w-full"
+                    "mx-auto"
+                    "overflow-auto"
+                    "divide-y"
+                    "divide-gray-300"
+                    "ring-1"
+                    "ring-black"
+                    "ring-opacity-5"
+                    "rounded-md"
+                    "shadow"]}]
+   children))
 
-(o/defstyled h2 :h2
-  :order-1
-  :text-gray-900
-  :text-2xl
-  :font-bold
-  :tracking-tight
-  :mt-2
-  ([& children]
-   (into [:<>] children)))
-
-(o/defstyled table :table
-  :table-auto
-  :w-full
-  :mx-auto
-  :overflow-auto)
-
-(o/defstyled td :td
-  :p-3)
+(defn td
+  [& children]
+  (into [:td {:class "align-top p-3"}] children))
 
 (defn pppre
   [x]
-  [:pre (with-out-str (pprint/pprint x))] )
+  [:div
+   [:pre
+    {:class "text-sm"}
+    (with-out-str (pprint/pprint x))]] )

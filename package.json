@@ -6,6 +6,9 @@
     "react-dom": "17.0.1"
   },
   "devDependencies": {
-    "shadow-cljs": "^2.16.12"
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.19",
+    "shadow-cljs": "^2.16.12",
+    "tailwindcss": "^3.2.4"
   }
 }

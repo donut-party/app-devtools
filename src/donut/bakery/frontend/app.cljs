@@ -10,10 +10,10 @@
   []
   [:div
    [:main {:class "flex-1"}
-    [:div {:class "max-w-2xl mx-auto"
+    [:div {:class "max-w-4xl mx-auto"
            :role  "topnav"}
      [ui/link
       [dnc/simple-route-link {:route-name :home}
        "home"]]]
-    [:div {:class "max-w-2xl mx-auto mt-4"}
+    [:div {:class "max-w-4xl mx-auto mt-4"}
      @(rf/subscribe [::dnf/routed-component :main])]]])

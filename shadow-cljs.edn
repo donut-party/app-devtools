@@ -14,7 +14,8 @@
                               :closure-defines         {"re_frame.trace.trace_enabled_QMARK_" true}
                               ;; this is specifically for the warning in loom/alg_generic:494.
                               :warnings                {:invalid-arithmetic false}}
-           :build-hooks      [(donut.hooks/write-styles-hook)]
+           :build-hooks      [(donut.hooks/write-styles-hook)
+                              (teknql.tailwind/start-watch!)]
 
            :modules
            {:main {:entries [donut.bakery.frontend.core]
@@ -23,5 +24,12 @@
            ;; start a development http server on http://localhost:3000
            :devtools
            {:preloads    [day8.re-frame-10x.preload]
+            :http-root   "frontend-target/dev/public"
             :before-load donut.bakery.frontend.core/stop
-            :after-load  donut.bakery.frontend.core/start}}}}
+            :after-load  donut.bakery.frontend.core/start}
+
+           :tailwind/output
+           "resources/donut/bakery/public/css/site.css"
+           }
+          }
+ }
