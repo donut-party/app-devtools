@@ -2,7 +2,9 @@
   (:require
    [cljs.pprint :as pprint]
    [donut.frontend.nav.components :as dnc]
-   [react :as react]))
+   [react :as react]
+   [reagent.core :as r]
+   [reagent.dom :as rd]))
 
 (defn link
   [opts & children]
@@ -38,12 +40,15 @@
 
 (defn highlight
   [x]
-  (react/useEffect (fn []))
-  [:div
-   [:pre
-    {:class "text-sm"}
-    [:code {:class                   "language-clojure"
-            :dangerouslySetInnerHTML {:__html (with-out-str (pprint/pprint x))}}]]])
+  (let [dom (r/atom {})]
+    (fn [x]
+      (react/useEffect (fn [] (.highlightElement js/Prism (:code @dom))))
+      [:div
+       [:pre
+        {:class "text-sm"}
+        [:code {:class                   "language-clojure"
+                :dangerouslySetInnerHTML {:__html (with-out-str (pprint/pprint x))}
+                :ref                     #(swap! dom assoc :code %)}]]])))
 
 (defn pppre
   [x]
