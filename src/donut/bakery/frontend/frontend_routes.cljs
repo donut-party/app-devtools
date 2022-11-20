@@ -4,17 +4,17 @@
    [donut.bakery.frontend.components.home :as h]))
 
 (def routes
-  [["/"
+  [["/donut/bakery"
     {:name       :home
      :components {:main [h/component]}
      :lifecycle  {:enter [[::dsf/get :donut.bakery/endpoint-routes]]}}]
 
-   ["/backend-endpoints"
-    {:name       :backend-endpoints
+   ["/donut/bakery/endpoint-routes"
+    {:name       :endpoint-routes
      :components {:main [h/component]}
      :lifecycle  {:enter [[::dsf/get :donut.bakery/endpoint-routes]]}}]
 
-   ["/database"
+   ["/donut/bakery/database"
     {:name       :database
      :components {:main [h/component]}
      :lifecycle  {:enter [[::dsf/get :donut.bakery/endpoint-routes]]}}]])

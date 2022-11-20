@@ -25,7 +25,7 @@
               :src "/donut/bakery/static/images/noun-donut-4079056-white.png"
               :width "32"}]]
       [:div {:class "p-4"}
-       [nav-link :backend-endpoints "endpoints"]
+       [nav-link :endpoint-routes "endpoint routes"]
        [nav-link :database "database"]]]]
     [:div {:class "flex flex-1 flex-col md:pl-64"}
      [:div {:class "py-2 px-8"}
