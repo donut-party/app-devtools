@@ -1,10 +1,9 @@
 (ns donut.bakery.frontend.app
   (:require
-   [re-frame.core :as rf]
+   [donut.bakery.frontend.handlers] ;; load handlers
    [donut.frontend.nav.components :as dnc]
    [donut.frontend.nav.flow :as dnf]
-   [donut.bakery.frontend.handlers] ;; load handlers
-   [donut.bakery.frontend.ui :as ui]))
+   [re-frame.core :as rf]))
 
 (defn nav-link
   [route-name text opts]
@@ -23,7 +22,7 @@
       [:div {:class "px-7 py-4 font-bold bg-rose-600 border-b-4 border-slate-800 text-lg"}
        "Donut Bakery "
        [:img {:class "inline"
-              :src "/static/images/noun-donut-4079056-white.png"
+              :src "/donut/bakery/static/images/noun-donut-4079056-white.png"
               :width "32"}]]
       [:div {:class "p-4"}
        [nav-link :backend-endpoints "endpoints"]
