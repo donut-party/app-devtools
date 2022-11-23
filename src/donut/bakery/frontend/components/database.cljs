@@ -1,7 +1,10 @@
 (ns donut.bakery.frontend.components.database
   (:require
    [donut.bakery.frontend.ui :as ui]
+   [donut.frontend.form.components :as dfc]
    [re-frame.core :as rf]))
+
+(def border-style "border border-collapse border-slate-200")
 
 (defn table
   [table-name {:keys [columns column-order]}]
@@ -12,18 +15,38 @@
     [:tbody
      [:<> (map (fn [column-name]
                  [:tr {:key column-name}
-                  [:td {:class "p-3 font-mono italic text-sm border border-collapse border-slate-300 align-top"}
+                  [:td {:class ["p-3 font-mono italic text-sm align-top" border-style]}
                    (name column-name)]
-                  [:td {:class "border border-collapse border-slate-300"}
+                  [:td {:class border-style}
                    [ui/pppre (get-in columns [column-name :raw])]]])
                column-order)]]]])
+
+(defn table-link
+  [table-name]
+  [:div {:class "px-2 py-1 bg-slate-300" :key table-name}
+   table-name])
+
+(defn table-name-filter
+  []
+  (dfc/with-form [:filter :table-name]
+    [:div {:class "mb-2"}
+     [*input :text :table-name
+      {:placeholder "filter tables"
+       :class "px-2 py-1 w-full"}]]))
 
 (defn component
   []
   [:div
    [ui/h1 "Database"]
-   (let [{:keys [table-order tables]}  @(rf/subscribe [:dbxray])]
-     (into [:div {:class "p-4 bg-white mt-2 divide-y divide-slate-100"}]
+   (let [{:keys [table-order tables]}  @(rf/subscribe [:filtered-dbxray])]
+     [:div {:class "grid grid-cols-5 mt-2"}
+      [:div {:class "bg-slate-200 p-4"}
+       [table-name-filter]
+       [:<> (->> table-order
+                 sort
+                 (map (fn [table-name] ^{:key table-name} [table-link table-name])))]]
+      (->> table-order
+           sort
            (map (fn [table-name]
-                  [table table-name (table-name tables)])
-                table-order)))])
+                  [table table-name (table-name tables)]))
+           (into [:div {:class "p-4 bg-white divide-y divide-slate-100 col-span-4"}]))])])

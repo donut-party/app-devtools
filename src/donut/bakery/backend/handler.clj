@@ -1,6 +1,7 @@
 (ns donut.bakery.backend.handler
   (:require
-   [reitit.ring :as rr]))
+   [reitit.ring :as rr]
+   [next.jdbc :as jdbc]))
 
 (defn wrap-dependencies
   [handler dependencies]
@@ -11,6 +12,6 @@
   [{:keys [router middleware db routes]}]
   (-> router
       (rr/ring-handler)
-      (wrap-dependencies {:db     db
+      (wrap-dependencies {:db     (jdbc/get-connection db)
                           :routes routes})
       middleware))

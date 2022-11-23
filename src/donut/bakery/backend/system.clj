@@ -45,7 +45,7 @@
     :db
     {:connection
      #::ds{:start  (fn [{:keys [::ds/config]}]
-                     (jdbc/get-connection (jdbc/get-datasource (:dbspec config))))
+                     (jdbc/get-datasource (:dbspec config)))
            :config {:dbspec (ds/ref [:env :dbspec])}}
 
      :migratus

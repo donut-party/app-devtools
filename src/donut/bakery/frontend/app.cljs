@@ -17,6 +17,8 @@
   []
   [:div
    [:main {:class "flex-1"}
+
+    ;; side nav
     [:div {:class "hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col"}
      [:div {:class "flex min-h-0 flex-1 flex-col bg-slate-600 text-white tracking-wide"}
       [:div {:class "px-7 py-4 font-bold bg-rose-600 border-b-4 border-slate-800 text-lg"}
@@ -27,6 +29,8 @@
       [:div {:class "p-4"}
        [nav-link :endpoint-routes "endpoint routes"]
        [nav-link :database "database"]]]]
+
+    ;; main area
     [:div {:class "flex flex-1 flex-col md:pl-64"}
-     [:div {:class "py-2 px-8"}
+     [:div {:class "py-4 px-8"}
       @(rf/subscribe [::dnf/routed-component :main])]]]])
