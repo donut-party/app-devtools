@@ -2,6 +2,7 @@
   (:require [donut.routes :as dr]
             #?@(:clj
                 [;; endpoint namespaces go here
+                 [donut.bakery.backend.endpoint.dbxray-endpoint :as dbxray]
                  [donut.bakery.backend.endpoint.endpoint-routes-endpoint :as endpoint-routes]
                  [ring.util.response :as resp]])))
 
@@ -12,6 +13,12 @@
       :ent-type :endpoint-routes
       :id-key   :endpoint-routes/id}
      #?(:clj endpoint-routes/collection-handlers)]
+
+    ["/api/donut/bakery/dbxray"
+     {:name     :donut.bakery/dbxray
+      :ent-type :dbxray
+      :id-key   :dbxray/id}
+     #?(:clj dbxray/collection-handlers)]
 
     ["/donut/bakery*"
      {:description "renders bakery's index.html"}

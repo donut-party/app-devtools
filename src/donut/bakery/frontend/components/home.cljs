@@ -7,7 +7,7 @@
   []
   [:div
    [:div
-    [ui/h1 "Backend Routes"]
+    [ui/h1 "Endpoint Routes"]
     (into
      [:div {:class "p-4 bg-white mt-2 divide-y divide-slate-100"}]
      (map (fn [[path options]]

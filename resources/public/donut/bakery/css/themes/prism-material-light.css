@@ -7,6 +7,7 @@ pre[class*="language-"] {
   word-wrap: normal;
   color: #90a4ae;
   background: #fafafa;
+  border-radius: .25rem;
   font-family: "Source Code Pro",
                "ui-monospace",
                "SFMono-Regular",
