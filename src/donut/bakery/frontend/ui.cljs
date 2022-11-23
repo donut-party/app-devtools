@@ -53,3 +53,7 @@
 (defn pppre
   [x]
   [:f> highlight x] )
+
+(defn inline-code
+  [x]
+  [:span {:class "font-mono text-sm bg-gray-100 rounded p-1"} x])

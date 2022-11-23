@@ -7,8 +7,15 @@ pre[class*="language-"] {
   word-wrap: normal;
   color: #90a4ae;
   background: #fafafa;
-  font-family: Roboto Mono, monospace;
-  font-size: 1em;
+  font-family: "Source Code Pro",
+               "ui-monospace",
+               "SFMono-Regular",
+               "Menlo",
+               "Monaco",
+               "Consolas",
+               "Liberation Mono",
+               "Courier New",
+               "monospace";
   line-height: 1.5em;
 
   -moz-tab-size: 4;
@@ -46,8 +53,7 @@ pre[class*="language-"] ::selection {
 pre[class*="language-"] {
   overflow: auto;
   position: relative;
-  margin: 0.5em 0;
-  padding: 1.25em 1em;
+  padding: .75rem;
 }
 
 .language-css > code,
