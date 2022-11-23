@@ -1,7 +1,6 @@
 (ns donut.bakery.backend.endpoint.dbxray-endpoint
   (:require
-   [donut.dbxray :as dbx]
-   [next.jdbc :as jdbc]))
+   [donut.dbxray :as dbx]))
 
 (def collection-handlers
   {:get
@@ -9,4 +8,4 @@
     (fn collection-get [{:keys [db]}]
       {:status 200
        :body   [{:dbxray/id   :all
-                 :dbxray/xray (dbx/xray (jdbc/get-connection db))}]})}})
+                 :dbxray/xray (dbx/xray db)}]})}})
