@@ -52,7 +52,7 @@
 
     :main-routes
     (derg/route-group
-     {:path-prefix "/api/v1"
+     {:path-prefix ""
       :shared-opts {:datasource (ds/ref [:db :datasource])}
       :routes      endpoint-routes/routes})
 

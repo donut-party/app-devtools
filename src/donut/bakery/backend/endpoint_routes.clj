@@ -18,8 +18,8 @@
     dbxray/collection-handlers]
 
    ["/donut/bakery*"
-    {:description "renders bakery's index.html"}
-    {:get {:handler (fn [_]
+    {:description "renders bakery's index.html"
+     :get {:handler (fn [_]
                       (-> (resp/resource-response "donut/bakery/index.html"
                                                   {:root "public"})
                           (resp/content-type "text/html")
