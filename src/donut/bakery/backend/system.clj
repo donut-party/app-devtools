@@ -3,10 +3,10 @@
    [aero.core :as aero]
    [clojure.java.io :as io]
    [donut.bakery.backend.endpoint-routes :as endpoint-routes]
+   [donut.endpoint.middleware :as dem]
    [donut.endpoint.route-group :as derg]
    [donut.endpoint.route-writer :as derw]
    [donut.endpoint.router :as der]
-   [donut.middleware :as dm]
    [donut.system :as ds]
    [next.jdbc :as jdbc]
    [ring.adapter.jetty :as rj]))
@@ -22,9 +22,6 @@
   {::ds/defs
    {:env
     (env-config)
-
-    :middleware
-    (assoc dm/MiddlewareComponentGroup :routes endpoint-routes/routes)
 
     :http
     {:server
@@ -43,6 +40,9 @@
            :config {:route-ring-handler (ds/ref [:routing :ring-handler])
                     :middleware         (ds/ref [:middleware :donut-middleware])}}}
 
+    :middleware
+    dem/DonutMiddlewareComponentGroup
+
     :routing
     {:ring-handler der/RingHandlerComponent
      :router       der/RouterComponent
@@ -57,7 +57,7 @@
       :routes      endpoint-routes/routes})
 
     :db
-    {:connection
+    {:datasource
      #::ds{:start  (fn [{:keys [::ds/config]}]
                      (jdbc/get-datasource (:dbspec config)))
            :config {:dbspec (ds/ref [:env :dbspec])}}}
@@ -68,7 +68,13 @@
 
 (defmethod ds/named-system :dev
   [_]
-  (ds/system :base {[:env] (env-config :dev)}))
+  (ds/system :base
+    {[:env]
+     (env-config :dev)
+
+     [:middleware :session-store ::ds/config :key]
+     (.getBytes "0123456789abcdef") ;; FIXME
+     }))
 
 (defmethod ds/named-system :test
   [_]

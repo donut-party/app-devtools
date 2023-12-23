@@ -32,7 +32,7 @@
 
   :framework-dev {:override-deps {party.donut/datapotato           {:local/root "../datapotato/datapotato"}
                                   party.donut/datapotato-next-jdbc {:local/root "../datapotato/datapotato-next-jdbc"}
-                                  party.donut/dbxray               {:local/root "../datapotato/dbxray"}
+                                  party.donut/dbxray               {:local/root "../dbxray"}
                                   party.donut/endpoint             {:local/root "../endpoint"}
                                   party.donut/endpoint-test        {:local/root "../endpoint-test"}
                                   party.donut/frontend             {:local/root "../frontend"}

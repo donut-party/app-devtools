@@ -1,13 +1,13 @@
 (ns donut.bakery.fixtures
   (:require
-   [donut.datapotato.next-jdbc :as dfn]
-   [donut.endpoint.test.harness :as deth]
    [donut.bakery.backend.system] ;; for multimethod
+   [donut.datapotato.next-jdbc :as dfn]
+   [donut.system :as ds]
    [next.jdbc :as jdbc]))
 
 (defn db-connection
   []
-  (deth/instance [:db :connection]))
+  (jdbc/get-connection (get-in ds/*system* [::ds/instances :db :datasource])))
 
 (def potato-schema
   {:example-entity {:prefix   :ee

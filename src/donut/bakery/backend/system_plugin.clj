@@ -1,6 +1,6 @@
 (ns donut.bakery.backend.system-plugin
   (:require
-   [donut.bakery.cross.endpoint-routes :as er]
+   [donut.bakery.backend.endpoint-routes :as er]
    [donut.system :as ds]))
 
 (defn inject-plugin
