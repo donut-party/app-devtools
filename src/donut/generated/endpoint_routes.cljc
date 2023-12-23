@@ -7,10 +7,10 @@
   [["/api/donut/bakery/endpoint-routes"
     {:id-key :endpoint-routes/id,
      :name :donut.bakery/endpoint-routes,
-     :ent-type :endpoint-routes}
-    {}]
+     :ent-type :endpoint-routes}]
    ["/api/donut/bakery/dbxray"
-    {:id-key :dbxray/id, :name :donut.bakery/dbxray, :ent-type :dbxray}
-    {}]
+    {:id-key :dbxray/id,
+     :name :donut.bakery/dbxray,
+     :ent-type :dbxray}]
    ["/donut/bakery*" {}]]]]
 )

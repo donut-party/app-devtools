@@ -6,16 +6,19 @@
 
 (def routes
   [["/api/donut/bakery/endpoint-routes"
-    {:name     :donut.bakery/endpoint-routes
-     :ent-type :endpoint-routes
-     :id-key   :endpoint-routes/id}
-    endpoint-routes/collection-handlers]
+    (merge
+     {:name     :donut.bakery/endpoint-routes
+      :ent-type :endpoint-routes
+      :id-key   :endpoint-routes/id}
+     endpoint-routes/collection-handlers)]
 
    ["/api/donut/bakery/dbxray"
-    {:name     :donut.bakery/dbxray
-     :ent-type :dbxray
-     :id-key   :dbxray/id}
-    dbxray/collection-handlers]
+    (merge
+     {:name     :donut.bakery/dbxray
+      :ent-type :dbxray
+      :id-key   :dbxray/id}
+     dbxray/collection-handlers)]
+
 
    ["/donut/bakery*"
     {:description "renders bakery's index.html"
