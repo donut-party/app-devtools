@@ -6,3 +6,5 @@
   (require 'dev)
   (in-ns 'dev)
   :loaded)
+
+(def go dev)

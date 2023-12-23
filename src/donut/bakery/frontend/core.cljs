@@ -5,7 +5,7 @@
    [donut.frontend.core.utils :as dcu]
    [donut.frontend.nav.flow :as dnf]
    [donut.system :as ds]
-   [donut.bakery.cross.endpoint-routes :as endpoint-routes]
+   [donut.generated.endpoint-routes :as endpoint-routes]
    [donut.bakery.frontend.app :as app]
    [donut.bakery.frontend.frontend-routes :as frontend-routes]
    [donut.bakery.frontend.subs] ;; load subs
