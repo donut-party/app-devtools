@@ -3,25 +3,22 @@
          ch.qos.logback/logback-classic    {:mvn/version "1.2.3"}
          com.github.seancorfield/honeysql  {:mvn/version "2.1.818"}
          com.github.seancorfield/next.jdbc {:mvn/version "1.2.737"}
-         com.lambdaisland/ornament         {:mvn/version "0.4.34"}
          environ/environ                   {:mvn/version "1.2.0"}
          metosin/muuntaja                  {:mvn/version "0.6.8"}
          metosin/reitit-malli              {:mvn/version "0.5.15"}
          metosin/reitit-middleware         {:mvn/version "0.5.15"}
-         migratus/migratus                 {:mvn/version "1.3.5"}
          org.clojure/clojure               {:mvn/version "1.10.3"}
-         org.xerial/sqlite-jdbc            {:mvn/version "3.36.0.3"}
 
-         party.donut/datapotato           {:mvn/version "1.0.448"}
-         party.donut/datapotato-next-jdbc {:mvn/version "1.0.448"}
-         party.donut/dbxray               {:mvn/version "0.0.69"}
-         party.donut/endpoint-test        {:mvn/version "0.0.18"}
+         party.donut/datapotato           {:mvn/version "1.0.450"}
+         party.donut/datapotato-next-jdbc {:mvn/version "1.0.450"}
+         party.donut/dbxray               {:mvn/version "0.0.70"}
+         party.donut/endpoint             {:mvn/version "0.0.30"}
+         party.donut/endpoint-test        {:mvn/version "0.0.28"}
          party.donut/generate             {:mvn/version "1.0.9"}
          party.donut/generators           {:mvn/version "0.0.5"}
-         party.donut/routes               {:mvn/version "0.0.5"}
-         party.donut/middleware           {:mvn/version "0.0.6"}
-         party.donut/sugar                {:mvn/version "0.0.16"}
-         party.donut/system               {:mvn/version "0.0.167"}
+         party.donut/routes               {:mvn/version "0.0.6"}
+         party.donut/sugar                {:mvn/version "0.0.19"}
+         party.donut/system               {:mvn/version "0.0.214"}
 
          ring/ring          {:mvn/version "1.9.4"}
          ring/ring-defaults {:mvn/version "0.3.3"}}
@@ -33,24 +30,24 @@
                  ring/ring-mock              {:mvn/version "0.4.0"}}
    :extra-paths ["dev/src" "test"]}
 
-  :framework-dev {:override-deps {party.donut/datapotato                    {:local/root "../datapotato/datapotato"}
-                                  party.donut/datapotato-fixtures-next-jdbc {:local/root "../datapotato/datapotato-fixtures-next-jdbc"}
-                                  party.donut/endpoint-test                 {:local/root "../endpoint-test"}
-                                  party.donut/frontend                      {:local/root "../frontend"}
-                                  party.donut/generate                      {:local/root "../generate"}
-                                  party.donut/generators                    {:local/root "../generators"}
-                                  party.donut/middleware                    {:local/root "../middleware"}
-                                  party.donut/routes                        {:local/root "../routes"}
-                                  party.donut/sugar                         {:local/root "../sugar"}
-                                  party.donut/system                        {:local/root "../system"}}}
+  :framework-dev {:override-deps {party.donut/datapotato           {:local/root "../datapotato/datapotato"}
+                                  party.donut/datapotato-next-jdbc {:local/root "../datapotato/datapotato-next-jdbc"}
+                                  party.donut/dbxray               {:local/root "../datapotato/dbxray"}
+                                  party.donut/endpoint             {:local/root "../endpoint"}
+                                  party.donut/endpoint-test        {:local/root "../endpoint-test"}
+                                  party.donut/frontend             {:local/root "../frontend"}
+                                  party.donut/generate             {:local/root "../generate"}
+                                  party.donut/generators           {:local/root "../generators"}
+                                  party.donut/routes               {:local/root "../routes"}
+                                  party.donut/sugar                {:local/root "../sugar"}
+                                  party.donut/system               {:local/root "../system"}}}
 
 
   :cljs
-  {:extra-deps {com.teknql/shadow-cljs-tailwind-jit {:mvn/version "1.0.0"}
-                day8.re-frame/re-frame-10x          {:mvn/version "1.2.1"}
-                org.clojure/clojurescript           {:mvn/version "1.11.4"}
-                party.donut/frontend                {:mvn/version "0.0.139"}
-                thheller/shadow-cljs                {:mvn/version "2.16.12"}}}
+  {:extra-deps {day8.re-frame/re-frame-10x {:mvn/version "1.2.1"}
+                org.clojure/clojurescript  {:mvn/version "1.11.4"}
+                party.donut/frontend       {:mvn/version "0.0.153"}
+                thheller/shadow-cljs       {:mvn/version "2.16.12"}}}
 
   :test
   {:extra-paths ["test"]
