@@ -14,7 +14,7 @@
 (def collection-handlers
   {:get
    {:handler
-    (fn collection-get [{{:keys [:system-store]} :dependencies}]
+    (fn collection-get [{{:keys [system-store]} :dependencies}]
       {:status 200
        :body   [{:endpoint-routes/id     :all
                  :endpoint-routes/routes (mapv (fn [[path opts]]
