@@ -69,7 +69,7 @@
                      (when (:run? config)
                        (migratus/migrate config)))
            :config {:run?          true
-                    :db            (ds/local-ref [:connection])
+                    :db            (ds/local-ref [:datasource])
                     :store         :database
                     :migration-dir "migrations"}}}
 
@@ -79,7 +79,6 @@
 
     :donut/bakery
     bakery-plugin/BakeryComponentGroup
-
     }})
 
 (defmethod ds/named-system :dev
