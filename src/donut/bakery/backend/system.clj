@@ -9,6 +9,7 @@
    [donut.endpoint.route-writer :as derw]
    [donut.endpoint.router :as der]
    [donut.system :as ds]
+   [migratus.core :as migratus]
    [next.jdbc :as jdbc]
    [ring.adapter.jetty :as rj]))
 
@@ -61,7 +62,16 @@
     {:datasource
      #::ds{:start  (fn [{:keys [::ds/config]}]
                      (jdbc/get-datasource (:dbspec config)))
-           :config {:dbspec (ds/ref [:env :dbspec])}}}
+           :config {:dbspec (ds/ref [:env :dbspec])}}
+
+     :migratus
+     #::ds{:start  (fn [{:keys [::ds/config]}]
+                     (when (:run? config)
+                       (migratus/migrate config)))
+           :config {:run?          true
+                    :db            (ds/local-ref [:connection])
+                    :store         :database
+                    :migration-dir "migrations"}}}
 
     :background
     {:route-writer derw/RouteWriterComponent}
