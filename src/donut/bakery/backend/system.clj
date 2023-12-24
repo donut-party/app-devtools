@@ -3,6 +3,7 @@
    [aero.core :as aero]
    [clojure.java.io :as io]
    [donut.bakery.backend.endpoint-routes :as endpoint-routes]
+   [donut.bakery.backend.system-plugin :as bakery-plugin]
    [donut.endpoint.middleware :as dem]
    [donut.endpoint.route-group :as derg]
    [donut.endpoint.route-writer :as derw]
@@ -53,7 +54,8 @@
     :main-routes
     (derg/route-group
      {:path-prefix ""
-      :shared-opts {:datasource (ds/ref [:db :datasource])}
+      :shared-opts {:datasource   (ds/ref [:db :datasource])
+                    :system-store (ds/ref [:donut/bakery :system-store])}
       :routes      endpoint-routes/routes})
 
     :db
@@ -64,6 +66,11 @@
 
     :background
     {:route-writer derw/RouteWriterComponent}
+
+
+    :donut/bakery
+    bakery-plugin/BakeryComponentGroup
+
     }})
 
 (defmethod ds/named-system :dev
