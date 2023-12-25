@@ -74,8 +74,8 @@
                     :migration-dir "migrations"}}}
 
     :background
-    {:route-writer derw/RouteWriterComponent}
-
+    {:route-writer (assoc-in derw/RouteWriterComponent
+                             [::ds/config :path] "dev/src/donut/generated/endpoint_routes.cljc")}
 
     :donut/bakery
     bakery-plugin/BakeryComponentGroup
