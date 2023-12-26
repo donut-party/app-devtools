@@ -35,12 +35,14 @@
   (map->SystemStore {:store (atom nil)}))
 
 (def StoreSystemComponent
-  #::ds{:start (fn [{:keys [::ds/system ::ds/config]}]
-                 (reset! (:store (:system-store config))
-                         system)
-                 nil)
+  #::ds{:start  (fn [{:keys [::ds/system ::ds/config]}]
+                  (reset! (:store (:system-store config))
+                          system)
+                  nil)
         ;; TODO this could be the topsorted last component to start
-        :config {:http-server (ds/ref [:http :server])
+        ;; `:top-node` makes sure this starts after most of rest of system
+        ;; so that bakery endpoints have access to started components
+        :config {:top-node     (ds/ref [:http :server])
                  :system-store (ds/local-ref [:system-store])}})
 
 (def SystemStoreComponent
