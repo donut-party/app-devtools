@@ -4,14 +4,13 @@
    [donut.system :as ds]
    [reitit.core :as r]))
 
-(defn representable?
+
+(defn format-route-data
+  "Handle objects that don't lend themselves to transit transmission, like functions"
   [x]
-  (or (vector? x)
-      (map? x)
-      (seq? x)
-      (number? x)
-      (string? x)
-      (keyword? x)))
+  (if ((some-fn vector? map? seq? number? string? keyword?) x)
+    x
+    (str x)))
 
 (def collection-handlers
   {:get
@@ -19,8 +18,9 @@
     (fn collection-get [{{:keys [system-store]} :dependencies}]
       {:status 200
        :body   [{:endpoint-routes/id     :all
-                 :endpoint-routes/routes (walk/postwalk (fn [x]
-                                                          (if (representable? x)
-                                                            x
-                                                            (str x)))
-                                                        (r/routes (ds/instance @system-store [:routing :router])))}]})}})
+                 :endpoint-routes/routes (walk/postwalk format-route-data
+                                                        (-> system-store
+                                                            :store
+                                                            deref
+                                                            (ds/instance [:routing :router])
+                                                            r/routes))}]})}})

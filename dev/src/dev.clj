@@ -20,17 +20,11 @@
 
 (nsrepl/set-refresh-dirs "dev/src" "src" "test")
 
-(defn representable?
-  [x]
-  (or (vector? x)
-      (map? x)
-      (seq? x)
-      (number? x)
-      (string? x)))
+(def instance dsr/instance)
 
 (defn routes
   []
-  (ds/instance dsrs/system [:routing :routes]))
+  (r/routes (instance [:routing :router])))
 
 (def start dsr/start)
 (def stop dsr/stop)
