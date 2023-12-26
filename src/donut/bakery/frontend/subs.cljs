@@ -28,3 +28,10 @@
       (update dbxray :table-order (fn [table-names]
                                     (filter #(not= -1 (.indexOf (name %) table-name-filter))
                                             table-names))))))
+
+
+(rf/reg-sub :system
+  (fn [db]
+    (-> (dcu/entities db :system :system/id)
+        first
+        :system/system)))

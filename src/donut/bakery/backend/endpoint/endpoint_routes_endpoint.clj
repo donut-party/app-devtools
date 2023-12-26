@@ -1,6 +1,7 @@
 (ns donut.bakery.backend.endpoint.endpoint-routes-endpoint
   (:require
    [clojure.walk :as walk]
+   [donut.bakery.backend.endpoint.common :as endpoint-common]
    [donut.system :as ds]
    [reitit.core :as r]))
 
@@ -18,7 +19,7 @@
     (fn collection-get [{{:keys [system-store]} :dependencies}]
       {:status 200
        :body   [{:endpoint-routes/id     :all
-                 :endpoint-routes/routes (walk/postwalk format-route-data
+                 :endpoint-routes/routes (walk/postwalk endpoint-common/format-system
                                                         (-> @system-store
                                                             (ds/instance [:routing :router])
                                                             r/routes))}]})}})

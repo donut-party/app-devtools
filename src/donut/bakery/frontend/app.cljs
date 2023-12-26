@@ -28,7 +28,8 @@
               :width "32"}]]
       [:div {:class "p-4"}
        [nav-link :endpoint-routes "endpoint routes"]
-       [nav-link :database "database"]]]]
+       [nav-link :database "database"]
+       [nav-link :system "system"]]]]
 
     ;; main area
     [:div {:class "flex flex-1 flex-col md:pl-64"}

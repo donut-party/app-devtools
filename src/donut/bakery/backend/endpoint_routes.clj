@@ -2,6 +2,7 @@
   (:require
    [donut.bakery.backend.endpoint.dbxray-endpoint :as dbxray]
    [donut.bakery.backend.endpoint.endpoint-routes-endpoint :as endpoint-routes]
+   [donut.bakery.backend.endpoint.system-endpoint :as system]
    [ring.util.response :as resp]))
 
 (def routes
@@ -19,6 +20,12 @@
       :id-key   :dbxray/id}
      dbxray/collection-handlers)]
 
+   ["/api/donut/bakery/system"
+    (merge
+     {:name     :donut.bakery/system
+      :ent-type :system
+      :id-key   :system/id}
+     system/collection-handlers)]
 
    ["/donut/bakery*"
     {:description "renders bakery's index.html"

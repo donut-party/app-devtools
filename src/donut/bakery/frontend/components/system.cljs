@@ -1,0 +1,16 @@
+(ns donut.bakery.frontend.components.system
+  (:require
+   [donut.bakery.frontend.ui :as ui]
+   [re-frame.core :as rf]))
+
+(defn component
+  []
+  [:div
+   [ui/h1 "System"]
+   (into
+    [:div {:class "p-4 bg-white mt-2 divide-y divide-slate-200"}]
+    (map (fn [[path options]]
+           [:div {:class "py-4 first:pt-0 last:pb-0"}
+            [:div {:class "font-mono font-bold text-sm rounded p-1"} path]
+            [ui/pppre options]])
+         @(rf/subscribe [:system])))])

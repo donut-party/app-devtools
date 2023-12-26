@@ -12,5 +12,9 @@
     {:id-key :dbxray/id,
      :name :donut.bakery/dbxray,
      :ent-type :dbxray}]
+   ["/api/donut/bakery/system"
+    {:id-key :system/id,
+     :name :donut.bakery/system,
+     :ent-type :system}]
    ["/donut/bakery*" {}]]]]
 )
