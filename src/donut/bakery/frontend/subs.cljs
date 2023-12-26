@@ -1,21 +1,18 @@
 (ns donut.bakery.frontend.subs
   (:require
-   [donut.frontend.core.utils :as dcu]
+   [clojure.string :as str]
    [donut.frontend.form.flow :as dff]
-   [re-frame.core :as rf]
-   [clojure.string :as str]))
+   [donut.frontend.path :as p]
+   [donut.system :as ds]
+   [re-frame.core :as rf]))
 
 (rf/reg-sub :endpoint-routes
   (fn [db]
-    (-> (dcu/entities db :endpoint-routes :endpoint-routes/id)
-        first
-        :endpoint-routes/routes)))
+    (p/get-path db :entity [:endpoint-routes :all :endpoint-routes/routes])))
 
 (rf/reg-sub :dbxray
   (fn [db]
-    (-> (dcu/entities db :dbxray :dbxray/id)
-        first
-        :dbxray/xray)))
+    (p/get-path db :entity [:dbxray :all :dbxray/xray])))
 
 (rf/reg-sub :filtered-dbxray
   :<- [:dbxray]
@@ -32,6 +29,4 @@
 
 (rf/reg-sub :system
   (fn [db]
-    (-> (dcu/entities db :system :system/id)
-        first
-        :system/system)))
+    (p/get-path db :entity [:system :system :system/system ::ds/defs])))
