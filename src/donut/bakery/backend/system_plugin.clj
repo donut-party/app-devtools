@@ -14,7 +14,10 @@
 
 (defrecord SystemStore [store]
   Object
-  (toString [_] system-store-string))
+  (toString [_] system-store-string)
+
+  clojure.lang.IDeref
+  (deref [_] (deref store)))
 
 (defmethod print-method SystemStore [v w]
   (.write w system-store-string))

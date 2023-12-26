@@ -19,8 +19,6 @@
       {:status 200
        :body   [{:endpoint-routes/id     :all
                  :endpoint-routes/routes (walk/postwalk format-route-data
-                                                        (-> system-store
-                                                            :store
-                                                            deref
+                                                        (-> @system-store
                                                             (ds/instance [:routing :router])
                                                             r/routes))}]})}})
