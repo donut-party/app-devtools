@@ -2,11 +2,12 @@
   {:clj-kondo/config {:linters {:unused-namespace {:level :off}}}}
   (:require
    [clojure.tools.namespace.repl :as nsrepl]
+   [clojure.walk :as walk]
    [dev.repl :as dev-repl]
+   [donut.bakery.backend.system :as sys]
    [donut.endpoint.test.harness :as deth]
    [donut.generate :as dg]
    [donut.generators :as dgs] ;; registor generators
-   [donut.bakery.backend.system :as sys]
    [donut.routes :as dr]
    [donut.system :as ds]
    [donut.system.repl :as dsr]
@@ -18,6 +19,14 @@
   (:refer-clojure :exclude [test]))
 
 (nsrepl/set-refresh-dirs "dev/src" "src" "test")
+
+(defn representable?
+  [x]
+  (or (vector? x)
+      (map? x)
+      (seq? x)
+      (number? x)
+      (string? x)))
 
 (defn routes
   []
