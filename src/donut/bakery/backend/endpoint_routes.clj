@@ -8,29 +8,32 @@
 (def routes
   [["/api/donut/bakery/endpoint-routes"
     (merge
-     {:name     :donut.bakery/endpoint-routes
-      :ent-type :endpoint-routes
-      :id-key   :endpoint-routes/id}
+     {:name             :donut.bakery/endpoint-routes
+      :ent-type         :endpoint-routes
+      :id-key           :endpoint-routes/id
+      :donut.system/doc "returns endpoint route definitions"}
      endpoint-routes/collection-handlers)]
 
    ["/api/donut/bakery/dbxray"
     (merge
-     {:name     :donut.bakery/dbxray
-      :ent-type :dbxray
-      :id-key   :dbxray/id}
+     {:name             :donut.bakery/dbxray
+      :ent-type         :dbxray
+      :id-key           :dbxray/id
+      :donut.system/doc "returns schema definitions"}
      dbxray/collection-handlers)]
 
    ["/api/donut/bakery/system"
     (merge
-     {:name     :donut.bakery/system
-      :ent-type :system
-      :id-key   :system/id}
+     {:name             :donut.bakery/system
+      :ent-type         :system
+      :id-key           :system/id
+      :donut.system/doc "returns system definition"}
      system/collection-handlers)]
 
    ["/donut/bakery*"
     {:description "renders bakery's index.html"
-     :get {:handler (fn [_]
-                      (-> (resp/resource-response "donut/bakery/index.html"
-                                                  {:root "public"})
-                          (resp/content-type "text/html")
-                          (resp/status 200)))}}]])
+     :get         {:handler (fn [_]
+                              (-> (resp/resource-response "donut/bakery/index.html"
+                                                          {:root "public"})
+                                  (resp/content-type "text/html")
+                                  (resp/status 200)))}}]])

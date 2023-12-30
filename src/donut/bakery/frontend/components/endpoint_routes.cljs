@@ -21,14 +21,15 @@
 (defn endpoint-route
   [[path route-options]]
   [:div {:class "bg-white mt-4 rounded-lg border-b-4"}
-   [:div {:class "text-lg p-4"}
+   [:div {:class "text-lg p-4 rounded-t-lg"}
     [:div {:class "font-mono font-bold rounded p-1"} path]
-    [:div {:class "font-mono"} (str (:name route-options))]]
+    [:div {:class "font-mono"} (str (:name route-options))]
+    (when-let [{:keys [:donut.system/doc]} route-options]
+      [:div {:class "italic text-gray-400 text-md"} doc])]
    ;; [ui/pppre (select-keys route-options [:id-key :ent-type])]
    [endpoint-method-handlers route-options]
    [:div {:class "p-4"}
-    [:h2 {:class "italic mb-4"}
-     "common options"]
+    [:h2 {:class "mb-4"} "common options"]
     [ui/pppre (apply dissoc route-options (into http-methods
                                                 [:muuntaja
                                                  :middleware
