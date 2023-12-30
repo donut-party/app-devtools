@@ -3,14 +3,40 @@
    [donut.bakery.frontend.ui :as ui]
    [re-frame.core :as rf]))
 
+(def http-methods
+  #{:get :put :post :update :delete :options})
+
+(defn endpoint-method-handlers
+  [route-options]
+  [:table {:class "border-collapse border-y min-w-full"}
+   (into [:tbody]
+         (mapv (fn [[method method-options]]
+                 [:tr {:class "divide-x"}
+                  [:td {:class "p-4 align-text-top"}
+                   [:pre {:class "text-sm"} (str method)]]
+                  [:td
+                   [ui/pppre method-options]]])
+               (select-keys route-options http-methods)))] )
+
+(defn endpoint-route
+  [[path route-options]]
+  [:div {:class "bg-white mt-4 rounded-lg border-b-4"}
+   [:div {:class "text-lg p-4"}
+    [:div {:class "font-mono font-bold rounded p-1"} path]
+    [:div {:class "font-mono"} (str (:name route-options))]]
+   ;; [ui/pppre (select-keys route-options [:id-key :ent-type])]
+   [endpoint-method-handlers route-options]
+   [:div {:class "p-4"}
+    [:h2 {:class "italic mb-4"}
+     "common options"]
+    [ui/pppre (apply dissoc route-options (into http-methods
+                                                [:muuntaja
+                                                 :middleware
+                                                 :coercion]))]]])
+
 (defn component
   []
-  [:div
-   [ui/h1 "Endpoint Routes"]
-   (into
-    [:div {:class "p-4 bg-white mt-2 divide-y divide-slate-200"}]
-    (map (fn [[path options]]
-           [:div {:class "py-4 first:pt-0 last:pb-0"}
-            [:div {:class "font-mono font-bold text-sm rounded p-1"} path]
-            [ui/pppre options]])
-         @(rf/subscribe [:endpoint-routes])))])
+  (into
+   [:div
+    [ui/h1 "Endpoint Routes"]]
+   (mapv endpoint-route @(rf/subscribe [:endpoint-routes]))))

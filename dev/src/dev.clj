@@ -14,6 +14,7 @@
    [donut.system.repl.state :as dsrs]
    [malli.core :as m]
    [muuntaja.core :as mu]
+   [portal.api :as p]
    [reitit.core :as r]
    [ring.mock.request :as ring-mock])
   (:refer-clojure :exclude [test]))
