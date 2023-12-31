@@ -29,4 +29,4 @@
 
 (rf/reg-sub :system
   (fn [db]
-    (p/get-path db :entity [:system :system :system/system ::ds/defs])))
+    (p/get-path db :entity [:system :system :system/system])))

@@ -4,7 +4,7 @@
 
 (defn format-system-element
   [x]
-  (if ((some-fn vector? map? seq? number? string? keyword?) x)
+  (if ((some-fn vector? map? seq? number? string? keyword? set?) x)
     x
     (str x)))
 
