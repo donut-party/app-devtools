@@ -1,6 +1,5 @@
 (ns donut.bakery.frontend.components.system
   (:require
-   [clojure.string :as str]
    [donut.bakery.frontend.ui :as ui]
    [donut.system :as ds]
    [re-frame.core :as rf]))
@@ -9,13 +8,20 @@
   [group-name component-name topsort-graph]
   (when-let [deps (get-in topsort-graph [:adj [group-name component-name]])]
     (into [:div {:class "text-sm mb-4"}
-           [:div {:class "italic"} "references"]]
+           [:div "references"]]
           (mapv (fn [dep]
                   [:pre
                    {:class "text-sky-600"}
-                   [:a {:href (str "#" (str/join "-" (map name dep)))}
+                   [:a {:href (str "#" dep)}
                     (str dep)]])
                 deps))))
+
+(defn component-docs
+  [docs]
+  (when docs
+    [:div
+     {:class "mt-4 mr-8 text-gray-600"}
+     docs]))
 
 (defn system-component-defs
   [group-name component-defs topsort-graph]
@@ -23,13 +29,15 @@
    (into [:tbody {:class "divide-y"}]
          (mapv (fn [[component-name component-def]]
                  [:tr
-                  [:td {:id (str (name group-name) "-" (name component-name))
-                        :class "p-4 pt-7 align-text-top text-sm"}
+                  [:td {:id (str [group-name component-name])
+                        :class "p-4 align-text-top text-sm"}
                    [:pre {:class "text-sm"} (str component-name)]]
                   [:td
+                   [component-docs (::ds/doc component-def)]
                    [:div
                     {:class "rounded-lg py-4 pr-4"}
-                    [ui/pppre component-def]]
+                    [ui/pppre (cond-> component-def
+                                (::ds/doc component-def) (dissoc ::ds/doc))]]
                    [component-deps group-name component-name topsort-graph]]])
                component-defs))])
 

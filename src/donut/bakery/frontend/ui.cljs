@@ -3,8 +3,7 @@
    [cljs.pprint :as pprint]
    [donut.frontend.nav.components :as dnc]
    [react :as react]
-   [reagent.core :as r]
-   [reagent.dom :as rd]))
+   [reagent.core :as r]))
 
 (defn link
   [opts & children]
@@ -47,6 +46,7 @@
        [:pre
         {:class "text-sm"}
         [:code {:class                   "language-clojure"
+                :style                   {:white-space "pre-wrap"}
                 :dangerouslySetInnerHTML {:__html (with-out-str (pprint/pprint x))}
                 :ref                     #(swap! dom assoc :code %)}]]])))
 
