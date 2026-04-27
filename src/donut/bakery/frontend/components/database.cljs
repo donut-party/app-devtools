@@ -2,6 +2,7 @@
   (:require
    [donut.bakery.frontend.ui :as ui]
    [donut.frontend.form.components :as dfc]
+   [donut.frontend.form.flow :as dff]
    [re-frame.core :as rf]))
 
 (def border-style "border border-collapse border-slate-200")
@@ -28,11 +29,12 @@
 
 (defn table-name-filter
   []
-  (dfc/with-form [:filter :table-name]
+  (dfc/with-form {::dff/form-key [:filter :table-name]}
     [:div {:class "mb-2"}
-     [*input :text :table-name
+     [*input {:type                  :text
+              :donut.input/attr-path :table-name}
       {:placeholder "filter tables"
-       :class "px-2 py-1 w-full"}]]))
+       :class       "px-2 py-1 w-full"}]]))
 
 (defn component
   []
