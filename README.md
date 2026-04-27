@@ -60,5 +60,5 @@ npx shadow-cljs watch dev
 
 FIXME choose a license
 
-Copyright © 2022 Daniel
+Copyright © 2022 Daniel Higginbotham
 

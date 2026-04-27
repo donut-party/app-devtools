@@ -19,12 +19,13 @@
                 *sync-success?
                 *sync-fail?
                 *sync-key
+                *sync-form
 
-                *submit
-                *submit
                 *input-opts
                 *input
+                *input-builder
                 *field
+                *attr-buffer
 
                 *form-state
                 *form-components
