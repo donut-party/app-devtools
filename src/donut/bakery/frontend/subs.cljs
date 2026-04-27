@@ -3,7 +3,6 @@
    [clojure.string :as str]
    [donut.frontend.form.flow :as dff]
    [donut.frontend.path :as p]
-   [donut.system :as ds]
    [re-frame.core :as rf]))
 
 (rf/reg-sub :endpoint-routes
@@ -16,9 +15,8 @@
 
 (rf/reg-sub :filtered-dbxray
   :<- [:dbxray]
-  :<- [::dff/attr-buffer {:donut.form/key         [:filter :table-name]
-                          :donut.input/attr-path  :table-name
-                          :donut.form/feedback-fn nil}]
+  :<- [::dff/attr-buffer {::dff/form-key         [:filter :table-name]
+                          :donut.input/attr-path :table-name}]
   (fn [[dbxray table-name-filter]]
     (if (str/blank? table-name-filter)
       dbxray
