@@ -13,4 +13,4 @@
                  :dbxray/xray (-> @system-store
                                   (ds/instance [:db :datasource])
                                   jdbc/get-connection
-                                  dbx/xray)}]})}})
+                                  (dbx/xray {:include-raw? true}))}]})}})
