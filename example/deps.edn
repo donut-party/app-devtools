@@ -49,6 +49,7 @@
 
   :cljs
   {:extra-deps {binaryage/devtools                              {:mvn/version "1.0.7"}
+                party.donut/bakery                              {:local/root "../"}
                 party.donut/frontend                            {:mvn/version "0.0.177"}
                 org.clojure/clojurescript                       {:mvn/version "1.11.132"}
                 com.google.javascript/closure-compiler-unshaded {:mvn/version "v20240317"}
