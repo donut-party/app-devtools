@@ -2,10 +2,8 @@
   (:require
    [aero.core :as aero]
    [clojure.java.io :as io]
-   [donut.bakery.backend.endpoint-routes :as endpoint-routes]
-   [donut.bakery.backend.system-plugin :as bakery-plugin]
+   [donut.bakery.backend.plugin :as bakery-plugin]
    [donut.endpoint.middleware :as dem]
-   [donut.endpoint.route-group :as derg]
    [donut.endpoint.route-writer :as derw]
    [donut.endpoint.router :as der]
    [donut.system :as ds]
@@ -49,14 +47,7 @@
     {:ring-handler der/RingHandlerComponent
      :router       der/RouterComponent
      :router-opts  der/router-opts
-     :routes       [(ds/ref [:main-routes :route-group])]}
-
-    :main-routes
-    (derg/route-group
-     {:path-prefix ""
-      :shared-opts {:datasource   (ds/ref [:db :datasource])
-                    :system-store (ds/ref [:donut/bakery :system-store])}
-      :routes      endpoint-routes/routes})
+     :routes       []}
 
     :db
     {:datasource
@@ -75,11 +66,9 @@
 
     :background
     {:route-writer (assoc-in derw/RouteWriterComponent
-                             [::ds/config :path] "dev/src/donut/generated/endpoint_routes.cljc")}
+                             [::ds/config :path] "dev/src/donut/generated/endpoint_routes.cljc")}}
 
-    :donut/bakery
-    bakery-plugin/BakeryComponentGroup
-    }})
+   ::ds/plugins [bakery-plugin/bakery-plugin]})
 
 (defmethod ds/named-system :dev
   [_]
