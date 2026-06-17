@@ -33,6 +33,7 @@
    ["/donut/bakery*"
     {:description "renders bakery's index.html"
      :get         {:handler (fn [_]
+                              (prn "bakery")
                               (-> (resp/resource-response "donut/bakery/index.html"
                                                           {:root "public"})
                                   (resp/content-type "text/html")

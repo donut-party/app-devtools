@@ -2,7 +2,6 @@
   (:require
    [clojure.pprint]
    [donut.bakery.backend.endpoint-routes :as endpoint-routes]
-   [donut.bakery.backend.plugin :as bakery-plugin]
    [donut.endpoint.route-group :as derg]
    [donut.system :as ds]))
 

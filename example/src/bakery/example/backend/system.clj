@@ -2,6 +2,7 @@
   (:require
    [aero.core :as aero]
    [clojure.java.io :as io]
+   [donut.bakery.backend.plugin :as bakery-plugin]
    [donut.endpoint.middleware :as dem]
    [donut.endpoint.route-group :as derg]
    [donut.endpoint.route-writer :as derw]
@@ -76,7 +77,8 @@
     {:route-writer derw/RouteWriterComponent}}
    
 
-   ::ds/plugins [deth/test-harness-plugin]})
+   ::ds/plugins [deth/test-harness-plugin
+                 bakery-plugin/bakery-plugin]})
 
 (defmethod ds/named-system :dev
   [_]
