@@ -5,16 +5,16 @@
    [donut.frontend.path :as p]
    [re-frame.core :as rf]))
 
-(rf/reg-sub :endpoint-routes
+(rf/reg-sub :donut.bakery/endpoint-routes
   (fn [db]
     (p/get-path db :entity [:endpoint-routes :all :endpoint-routes/routes])))
 
-(rf/reg-sub :dbxray
+(rf/reg-sub :donut.bakery/dbxray
   (fn [db]
     (p/get-path db :entity [:dbxray :all :dbxray/xray])))
 
-(rf/reg-sub :filtered-dbxray
-  :<- [:dbxray]
+(rf/reg-sub :donut.bakery/filtered-dbxray
+  :<- [:donut.bakery/dbxray]
   :<- [::dff/attr-buffer {::dff/form-key         [:filter :table-name]
                           :donut.input/attr-path :table-name}]
   (fn [[dbxray table-name-filter]]
@@ -25,6 +25,6 @@
                                             table-names))))))
 
 
-(rf/reg-sub :system
+(rf/reg-sub :donut.bakery/system
   (fn [db]
     (p/get-path db :entity [:system :system :system/system])))

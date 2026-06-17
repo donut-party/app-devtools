@@ -1,6 +1,7 @@
 (ns donut.bakery.frontend.app
   (:require
    [donut.bakery.frontend.handlers] ;; load handlers
+   [donut.bakery.frontend.subs] ;; load subs
    [donut.frontend.nav.components :as dnc]
    [donut.frontend.nav.flow :as dnf]
    [re-frame.core :as rf]))
@@ -27,9 +28,9 @@
               :src "/donut/bakery/static/images/noun-donut-4079056-white.png"
               :width "32"}]]
       [:div {:class "p-4"}
-       [nav-link :endpoint-routes "endpoint routes"]
-       [nav-link :database "database"]
-       [nav-link :system "system"]]]]
+       [nav-link :donut.bakery/endpoint-routes "endpoint routes"]
+       [nav-link :donut.bakery/database "database"]
+       [nav-link :donut.bakery/system "system"]]]]
 
     ;; main area
     [:div {:class "flex flex-1 flex-col md:pl-64"}

@@ -40,7 +40,7 @@
   []
   [:div
    [ui/h1 "Database"]
-   (let [{:keys [table-order tables]}  @(rf/subscribe [:filtered-dbxray])]
+   (let [{:keys [table-order tables]}  @(rf/subscribe [:donut.bakery/filtered-dbxray])]
      [:div {:class "grid grid-cols-5 mt-2"}
       [:div {:class "bg-slate-200 p-4"}
        [table-name-filter]

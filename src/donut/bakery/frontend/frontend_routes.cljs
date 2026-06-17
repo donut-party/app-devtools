@@ -9,21 +9,21 @@
 
 (def routes
   [["/donut/bakery"
-    {:name       :home
+    {:name       :donut.bakery/home
      :components {:main [h/component]}
      ::dfe/on    {:enter [[::dsf/get {::dsf/req {:route-name :donut.bakery/endpoint-routes}}]]}}]
 
    ["/donut/bakery/endpoint-routes"
-    {:name       :endpoint-routes
+    {:name       :donut.bakery/endpoint-routes
      :components {:main [er/component]}
      ::dfe/on    {:enter [[::dsf/get {::dsf/req {:route-name :donut.bakery/endpoint-routes}}]]}}]
 
    ["/donut/bakery/database"
-    {:name       :database
+    {:name       :donut.bakery/database
      :components {:main [db/component]}
      ::dfe/on    {:enter [[::dsf/get {::dsf/req {:route-name :donut.bakery/dbxray}}]]}}]
 
    ["/donut/bakery/system"
-    {:name       :system
+    {:name       :donut.bakery/system
      :components {:main [system/component]}
      ::dfe/on    {:enter [[::dsf/get {::dsf/req {:route-name :donut.bakery/system}}]]}}]])

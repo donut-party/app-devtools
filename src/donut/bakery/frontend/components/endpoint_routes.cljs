@@ -61,4 +61,4 @@
   (into
    [:div
     [ui/h1 "Endpoint Routes"]]
-   (mapv endpoint-route @(rf/subscribe [:endpoint-routes]))))
+   (mapv endpoint-route @(rf/subscribe [:donut.bakery/endpoint-routes]))))

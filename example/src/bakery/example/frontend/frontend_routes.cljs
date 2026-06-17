@@ -1,5 +1,6 @@
 (ns bakery.example.frontend.frontend-routes
   (:require
+   [donut.bakery.frontend.frontend-routes :as bakery-routes]
    [donut.frontend.events :as dfe]
    [donut.frontend.routes :as dfr]
    [donut.frontend.sync.flow :as dsf]
@@ -8,4 +9,5 @@
 (dfr/defroutes routes
   [["/"
     {:name       :home
-     :components {:main [h/component]}}]])
+     :components {:main [h/component]}}]
+   bakery-routes/routes])

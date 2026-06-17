@@ -14,4 +14,4 @@
             [:div {:class "py-4 first:pt-0 last:pb-0"}
              [:div {:class "font-mono font-bold text-sm rounded p-1"} path]
              [ui/pppre options]])
-          @(rf/subscribe [:endpoint-routes])))]])
+          @(rf/subscribe [:donut.bakery/endpoint-routes])))]])

@@ -54,7 +54,7 @@
    [ui/h1 "System"]
    (into
     [:div]
-    (let [{:keys [::ds/defs ::ds/graphs]} @(rf/subscribe [:system])]
+    (let [{:keys [::ds/defs ::ds/graphs]} @(rf/subscribe [:donut.bakery/system])]
       (mapv (fn [component-group]
               (system-component-group component-group (:topsort graphs)))
             defs)))])
