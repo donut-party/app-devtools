@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "shadow:watch": "shadow-cljs watch dev ext",
+    "shadow:watch": "shadow-cljs watch dev bakery ext",
     "shadow:release": "shadow-cljs release app",
     "tailwind:watch": "tailwindcss -i ./src/css/tailwind.css -o ./resources/public/css/main.css --watch",
     "dev": "run-p -l *:watch",
