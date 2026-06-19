@@ -1,35 +1,66 @@
 (ns build
-  (:refer-clojure :exclude [test])
+  "donut/bakery's build script. Builds on https://github.com/seancorfield/honeysql/blob/develop/build.clj
+
+  Run tests:
+  clojure -X:test
+  clojure -X:test:master
+  For more information, run:
+  clojure -A:deps -T:build help/doc"
+
   (:require
-   [clojure.tools.build.api :as b] ; for b/git-count-revs
-   [org.corfield.build :as bb]))
+   [clojure.tools.build.api :as b]
+   [deps-deploy.deps-deploy :as dd])
+  (:refer-clojure :exclude [test]))
 
-(def lib 'net.clojars.donut/bakery)
+(def lib 'party.donut/bakery)
 (def version (format "0.0.%s" (b/git-count-revs nil)))
+(def class-dir "target/classes")
+(def basis (b/create-basis {:project "deps.edn"}))
 
-(defn test "Run the tests." [opts]
-  (bb/run-tests opts))
+(defn- pom-template [version]
+  [[:description "devex tools for Donut"]
+   [:url "https://github.com/donut-party/bakery"]
+   [:licenses
+    [:license
+     [:name "MIT"]
+     [:url "https://opensource.org/license/mit/"]]]
+   [:developers
+    [:developer
+     [:name "Daniel Higginbotham"]]]
+   [:scm
+    [:url "https://github.com/donut-party/bakery"]
+    [:connection "scm:git:https://github.com/donut-party/bakery.git"]
+    [:developerConnection "scm:git:ssh:git@github.com:donut-party/bakery.git"]
+    [:tag (str "v" version)]]])
 
-(defn ci "Run the CI pipeline of tests (and build the JAR)." [opts]
-  (-> opts
-      (assoc :lib lib :version version)
-      (bb/run-tests)
-      (bb/clean)
-      (bb/jar)))
+(defn- jar-opts [opts]
+  (assoc opts
+         :lib lib
+         :version version
+         :jar-file (format "target/%s-%s.jar" lib version)
+         :basis basis
+         :class-dir class-dir
+         :target "target"
+         :src-dirs ["src" "resources"]
+         :pom-data (pom-template version)))
 
 (defn jar "build a jar"
   [opts]
-  (-> opts
-      (assoc :lib lib :version version)
-      (bb/clean)
-      (bb/jar)))
-
-(defn install "Install the JAR locally." [opts]
-  (-> opts
-      (assoc :lib lib :version version)
-      (bb/install)))
+  (let [opts (jar-opts opts)]
+    (b/delete {:path "target"})
+    (b/write-pom opts)
+    (b/copy-dir {:src-dirs ["src" "resources"]
+                 :target-dir class-dir})
+    (b/jar opts)))
 
 (defn deploy "Deploy the JAR to Clojars." [opts]
-  (-> opts
-      (assoc :lib lib :version version)
-      (bb/deploy)))
+  (let [{:keys [jar-file] :as opts} (jar-opts opts)]
+    (dd/deploy {:installer :remote :artifact (b/resolve-path jar-file)
+                :pom-file (b/pom-path (select-keys opts [:lib :class-dir]))}))
+  opts)
+
+(defn install [opts]
+  (let [opts (jar-opts opts)]
+    (jar opts)
+    (b/install opts)
+    (println version)))
