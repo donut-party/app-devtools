@@ -1,6 +1,7 @@
 (ns donut.bakery.generators
   (:require
    [clojure.java.io :as io]
+   [clojure.string :as str]
    [donut.generate :as dg]
    [donut.system :as-alias ds]
    [rewrite-clj.zip :as rz]))
@@ -11,6 +12,13 @@
      (find-ns-aliased-kw loc kw-str)))
   ([loc kw-str]
    (rz/find loc rz/next #(= (rz/string %) kw-str))))
+
+(defn add-bakery-to-shadow-watch
+  [base s]
+  (let [els (set (str/split s #"\s"))]
+    (if (els s)
+      base
+      (str base " " s))))
 
 (defmethod dg/generator ::install
   [_ {:keys [top] :as data}]
@@ -41,9 +49,15 @@
                     :destination {:namespace system-ns
                                   :extension "clj"
                                   :dir       "src"}
-                    :modify      {:path  ['defmethod 'ds/named-system :base (find-ns-aliased-kw "::ds/plugins") rz/right]
-                                  :edits [rz/append-child]}
-                    :content     {:form 'bakery-plugin/bakery-plugin}}]
+                    :modify      {:path  ['defmethod 'ds/named-system :base (dg/pred map?)]
+                                  :edits [(dg/upsert-vector-key :donut.system/plugins 'bakery-plugin/bakery-plugin)]}
+                    :content     {:form nil}}
+                   {:id          ::package.json
+                    :description "update package.json to include bakery"
+                    :destination {:path "package.json"}
+                    :modify      {:path  [:scripts :shadow:watch]
+                                  :edits [add-bakery-to-shadow-watch]}
+                    :content     {:form "bakery"}}]
      :data-schema [:map
                    [:top {:optional? false}]]
      :data        data}))

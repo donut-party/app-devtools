@@ -16,7 +16,7 @@
          party.donut/dbxray               {:mvn/version "0.0.70"}
          party.donut/endpoint             {:mvn/version "0.0.39"}
          party.donut/endpoint-test        {:mvn/version "0.0.28"}
-         party.donut/generate             {:mvn/version "1.0.64"}
+         party.donut/generate             {:mvn/version "1.0.77"}
          party.donut/generators           {:mvn/version "0.0.44"}
          party.donut/routes               {:mvn/version "0.0.6"}
          party.donut/sugar                {:mvn/version "0.0.19"}
