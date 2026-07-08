@@ -35,7 +35,7 @@
                                   :dir       "src"}
                     :modify      {:path  ['ns (dg/find-parent :require)]
                                   :edits [dg/append-child-newline
-                                          [rz/append-child '[donut.bakery.plugin :as bakery-plugin]]]}}
+                                          [rz/append-child '[donut.bakery.backend.plugin :as bakery-plugin]]]}}
                    {:id          ::system-plugin
                     :type        [:clojure :modify]
                     :description "add bakery plugin to base system"
