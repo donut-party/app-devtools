@@ -21,7 +21,13 @@
                     :destination {:path "deps.edn"}
                     :modify      {:path  [:deps (dg/pred map?)]
                                   :edits [[dg/node-merge (dg/interpolated "{party.donut/bakery {:mvn/version \"{{gen-lib-version}}\"}}")]]}}
-                   {:id          ::shadow-cljs.edn
+                   {:id          ::shadow-cljs.edn-roots
+                    :type        [:clojure :modify]
+                    :description "update shadow-cljs.edn, add bakery target to roots"
+                    :destination {:path "shadow-cljs.edn"}
+                    :modify      {:path  [:dev-http :roots (dg/pred vector?)]
+                                  :edits [[rz/append-child "frontend-target/bakery/public"]]}}
+                   {:id          ::shadow-cljs.edn-target
                     :type        [:clojure :modify]
                     :description "update shadow-cljs.edn, add bakery build target"
                     :destination {:path "shadow-cljs.edn"}

@@ -41,7 +41,8 @@
          :basis basis
          :class-dir class-dir
          :target "target"
-         :src-dirs ["src" "resources"]
+         :src-dirs ["src"]
+         :resource-dirs ["resources"]
          :pom-data (pom-template version)))
 
 (defn jar "build a jar"
