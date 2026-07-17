@@ -1,10 +1,10 @@
 (ns bakery.example.frontend.core
   (:require
+   [donut.compiler.monolith.inject :as inject]
    [donut.frontend.config :as dconf]
    [donut.frontend.core.flow :as dcf]
    [donut.frontend.core.utils :as dcu]
    [donut.frontend.nav.flow :as dnf]
-   [donut.generated.endpoint-routes :as endpoint-routes]
    [bakery.example.frontend.app :as app]
    [bakery.example.frontend.frontend-routes :as frontend-routes]
    [bakery.example.frontend.subs] ;; load subs
@@ -13,13 +13,15 @@
    [re-frame.core :as rf]
    [reagent.dom :as rdom]))
 
+(def endpoint-routes (inject/backend-routes))
+
 (defmethod ds/named-system :frontend
   [_]
   (meta-merge/meta-merge
    dconf/default-config
    {::ds/defs
     {:donut.frontend
-     {:sync-router     #::ds{:config {:routes endpoint-routes/routes}}
+     {:sync-router     #::ds{:config {:routes endpoint-routes}}
       :frontend-router #::ds{:config {:routes frontend-routes/routes}}}}}))
 
 (defmethod ds/named-system :frontend-dev

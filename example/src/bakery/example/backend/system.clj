@@ -3,9 +3,9 @@
    [aero.core :as aero]
    [clojure.java.io :as io]
    [donut.bakery.backend.plugin :as bakery-plugin]
+   [donut.compiler.monolith.registry :as monolith-registry]
    [donut.endpoint.middleware :as dem]
    [donut.endpoint.route-group :as derg]
-   [donut.endpoint.route-writer :as derw]
    [donut.endpoint.router :as der]
    [donut.endpoint.test.harness :as deth]
    [bakery.example.backend.endpoint-routes :as endpoint-routes]
@@ -74,8 +74,8 @@
       (ds/ref [:env :profile-name]))}
 
     :background
-    {:route-writer derw/RouteWriterComponent}}
-   
+    {:route-registry monolith-registry/RouteRegistryComponent}}
+
 
    ::ds/plugins [deth/test-harness-plugin
                  bakery-plugin/bakery-plugin]})

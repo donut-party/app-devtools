@@ -3,8 +3,8 @@
    [aero.core :as aero]
    [clojure.java.io :as io]
    [donut.bakery.backend.plugin :as bakery-plugin]
+   [donut.compiler.monolith.registry :as monolith-registry]
    [donut.endpoint.middleware :as dem]
-   [donut.endpoint.route-writer :as derw]
    [donut.endpoint.router :as der]
    [donut.system :as ds]
    [migratus.core :as migratus]
@@ -65,8 +65,7 @@
                     :migration-dir "migrations"}}}
 
     :background
-    {:route-writer (assoc-in derw/RouteWriterComponent
-                             [::ds/config :path] "dev/src/donut/generated/endpoint_routes.cljc")}}
+    {:route-registry monolith-registry/RouteRegistryComponent}}
 
    ::ds/plugins [bakery-plugin/bakery-plugin]})
 

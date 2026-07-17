@@ -1,5 +1,5 @@
 ;; shadow-cljs configuration
-{:deps           {:aliases [:cljs :dev :framework-dev]}
+{:deps           {:aliases [:cljs :dev :framework-dev :monolith]}
  :dev-http       {3100 {:roots     ["resources/public/donut/bakery" "frontend-target/dev/public"]
                         :proxy-url "http://localhost:3110"}}
 
@@ -12,7 +12,8 @@
                               :source-map-detail-level :all
                               :closure-defines         {"re_frame.trace.trace_enabled_QMARK_" true}
                               ;; this is specifically for the warning in loom/alg_generic:494.
-                              :warnings                {:invalid-arithmetic false}}
+                              :warnings                {:invalid-arithmetic false}
+                              :cache-blockers          #{donut.compiler.monolith.inject}}
 
            :modules
            {:main {:entries [donut.bakery.frontend.core]
