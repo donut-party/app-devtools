@@ -28,8 +28,8 @@
  ;; party.donut/compiler-monolith is :local/root only (never published to
  ;; Maven), so it's alias-scoped rather than a top-level :deps entry —
  ;; build.clj's basis for jar/pom generation ignores aliases entirely, so
- ;; keeping it here means it never leaks into bakery's published pom.
- ;; Consuming apps (e.g. template-test) must declare it themselves; bakery
+ ;; keeping it here means it never leaks into devtools's published pom.
+ ;; Consuming apps (e.g. template-test) must declare it themselves; devtools
  ;; being a :local/root or :mvn dependency doesn't propagate it for them.
  :aliases
  {:dev

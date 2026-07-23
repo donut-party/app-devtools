@@ -1,5 +1,5 @@
 (ns build
-  "donut/bakery's build script. Builds on https://github.com/seancorfield/honeysql/blob/develop/build.clj
+  "donut/devtools's build script. Builds on https://github.com/seancorfield/honeysql/blob/develop/build.clj
 
   Run tests:
   clojure -X:test
@@ -12,14 +12,14 @@
    [deps-deploy.deps-deploy :as dd])
   (:refer-clojure :exclude [test]))
 
-(def lib 'party.donut/bakery)
+(def lib 'party.donut/devtools)
 (def version (format "0.0.%s" (b/git-count-revs nil)))
 (def class-dir "target/classes")
 (def basis (b/create-basis {:project "deps.edn"}))
 
 (defn- pom-template [version]
   [[:description "devex tools for Donut"]
-   [:url "https://github.com/donut-party/bakery"]
+   [:url "https://github.com/donut-party/devtools"]
    [:licenses
     [:license
      [:name "MIT"]
@@ -28,9 +28,9 @@
     [:developer
      [:name "Daniel Higginbotham"]]]
    [:scm
-    [:url "https://github.com/donut-party/bakery"]
-    [:connection "scm:git:https://github.com/donut-party/bakery.git"]
-    [:developerConnection "scm:git:ssh:git@github.com:donut-party/bakery.git"]
+    [:url "https://github.com/donut-party/devtools"]
+    [:connection "scm:git:https://github.com/donut-party/devtools.git"]
+    [:developerConnection "scm:git:ssh:git@github.com:donut-party/devtools.git"]
     [:tag (str "v" version)]]])
 
 (defn- jar-opts [opts]
