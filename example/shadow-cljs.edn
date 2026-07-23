@@ -1,6 +1,6 @@
 ;; shadow-cljs configuration
 {:deps           {:aliases [:cljs :dev :framework-dev :monolith]}
- :dev-http       {3000 {:roots     ["resources/public" "frontend-target/dev/public" "frontend-target/devtools/public"]
+ :dev-http       {3000 {:roots     ["resources/public" "frontend-target/dev/public" "frontend-target/app-devtools/public"]
                         :proxy-url "http://localhost:3010"
                         :push-state/headers {"Cross-Origin-Opener-Policy" "same-origin-allow-popups"}}}
 
@@ -16,11 +16,11 @@
                               ;; this is specifically for the warning in loom/alg_generic:494.
                               :warnings                {:invalid-arithmetic false}
                               :cache-blockers          #{donut.compiler.monolith.inject}}
-           :build-hooks      [(donut.frontend.routes/write-frontend-routes-hook devtools.example.frontend.frontend-routes/routes)]
+           :build-hooks      [(donut.frontend.routes/write-frontend-routes-hook app-devtools.example.frontend.frontend-routes/routes)]
 
            :modules
-           {:main {:entries [devtools.example.frontend.core]
-                   :init-fn devtools.example.frontend.core/init}}
+           {:main {:entries [app-devtools.example.frontend.core]
+                   :init-fn app-devtools.example.frontend.core/init}}
 
            ;; start a development http server on http://localhost:3000
            :devtools
@@ -38,12 +38,12 @@
            :asset-path       "/js"
            :compiler-options {:warnings {:invalid-arithmetic false}}
            :modules
-           {:main {:entries [devtools.example.frontend.core]
-                   :init-fn devtools.example.frontend.core/init}}}
+           {:main {:entries [app-devtools.example.frontend.core]
+                   :init-fn app-devtools.example.frontend.core/init}}}
 
-          :devtools
+          :app-devtools
           {:target           :browser
-           :output-dir       "frontend-target/devtools/public/js"
+           :output-dir       "frontend-target/app-devtools/public/js"
            :asset-path       "/js"
            :compiler-options {:optimizations           :none
                               :source-map              true
@@ -53,11 +53,11 @@
                               ;; this is specifically for the warning in loom/alg_generic:494.
                               :warnings                {:invalid-arithmetic false}
                               :cache-blockers          #{donut.compiler.monolith.inject}}
-           :build-hooks      [(donut.frontend.routes/write-frontend-routes-hook devtools.example.frontend.frontend-routes/routes)]
+           :build-hooks      [(donut.frontend.routes/write-frontend-routes-hook app-devtools.example.frontend.frontend-routes/routes)]
 
            :modules
-           {:devtools {:entries [donut.devtools.frontend.core]
-                       :init-fn donut.devtools.frontend.core/init}}
+           {:app-devtools {:entries [donut.app-devtools.frontend.core]
+                           :init-fn donut.app-devtools.frontend.core/init}}
 
            ;; start a development http server on http://localhost:3000
            :devtools

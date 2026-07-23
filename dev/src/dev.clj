@@ -4,7 +4,7 @@
    [clojure.tools.namespace.repl :as nsrepl]
    [clojure.walk :as walk]
    [dev.repl :as dev-repl]
-   [donut.devtools.backend.system :as sys]
+   [donut.app-devtools.backend.system :as sys]
    [donut.endpoint.test.harness :as deth]
    [donut.generate :as dg]
    [donut.generators :as dgs] ;; registor generators

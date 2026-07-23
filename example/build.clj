@@ -1,5 +1,5 @@
 (ns build
-  "devtools/example's build script. 
+  "app-devtools/example's build script. 
 
   Run tests:
   clojure -X:test
@@ -10,7 +10,7 @@
    [clojure.tools.build.api :as b])
   (:refer-clojure :exclude [test]))
 
-(def lib 'devtools/example)
+(def lib 'app-devtools/example)
 (def version (format "0.0.%s" (b/git-count-revs nil)))
 (def class-dir "target/classes")
 (def basis (delay (b/create-basis {:project "deps.edn"})))
@@ -24,9 +24,9 @@
   (b/copy-dir {:src-dirs ["src" "resources"]
                :target-dir class-dir})
   (b/compile-clj {:basis @basis
-                  :ns-compile '[devtools.example.backend.core]
+                  :ns-compile '[app-devtools.example.backend.core]
                   :class-dir class-dir})
   (b/uber {:class-dir class-dir
            :uber-file uber-file
            :basis @basis
-           :main 'devtools.example.backend.core}))
+           :main 'app-devtools.example.backend.core}))

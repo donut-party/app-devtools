@@ -1,9 +1,9 @@
 {
   "scripts": {
-    "shadow:watch": "shadow-cljs watch dev devtools ext",
+    "shadow:watch": "shadow-cljs watch dev app-devtools ext",
     "shadow:release": "shadow-cljs release app",
     "tailwind:watch": "tailwindcss -i ./src/css/tailwind.css -o ./resources/public/css/main.css --watch",
-    "dev": "clojure -M:dev:cljs:framework-dev:monolith -m donut.compiler.monolith.dev dev devtools",
+    "dev": "clojure -M:dev:cljs:framework-dev:monolith -m donut.compiler.monolith.dev dev app-devtools",
     "release": "clojure -M:dev:cljs:framework-dev:monolith -m donut.compiler.monolith.release"
   },
   "dependencies": {

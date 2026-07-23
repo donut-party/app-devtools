@@ -1,7 +1,7 @@
 (ns migratus
   (:require
    #_:clj-kondo/ignore
-   [devtools.example.backend.system :as system]
+   [app-devtools.example.backend.system :as system]
    [donut.system :as ds]))
 
 (defn migratus-config
