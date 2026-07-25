@@ -25,6 +25,11 @@
          ring/ring          {:mvn/version "1.9.4"}
          ring/ring-defaults {:mvn/version "0.3.3"}}
 
+ :donut/lib {:name           party.donut/app-devtools
+             :description    "devex tools for Donut"
+             :github         "donut-party/app-devtools"
+             :version-prefix "0.0"}
+
  ;; party.donut/compiler-monolith is :local/root only (never published to
  ;; Maven), so it's alias-scoped rather than a top-level :deps entry —
  ;; build.clj's basis for jar/pom generation ignores aliases entirely, so
@@ -81,6 +86,6 @@
 
 
   :build
-  {:deps       {io.github.clojure/tools.build {:mvn/version "0.9.6"}
-                slipset/deps-deploy           {:mvn/version "0.2.1"}}
-   :ns-default build}}}
+  {:deps       {io.github.donut-party/framework-build
+                {:git/sha "912e0b0ffc914cf1b5824650268307062d92e40c"}}
+   :ns-default donut.build}}}
