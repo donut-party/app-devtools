@@ -1,72 +1,81 @@
 (ns donut.app-devtools.generators-test
   (:require
+   [clojure.edn :as edn]
    [clojure.string :as str]
    [clojure.test :refer [deftest is testing]]
    [donut.app-devtools.generators :as sut]
    [donut.generate :as dg]))
 
+(def deps-edn
+  "{:deps {org.clojure/clojure {:mvn/version \"1.12.0\"}}
+
+ :donut/scripts
+ {:default [\"dev\" \"tailwind:watch\"]
+  :scripts {\"dev\"            {:shadow-build :dev}
+            \"tailwind:watch\" {:cmd [\"npx\" \"tailwindcss\" \"--watch\"]}}}}")
+
+(def shadow-cljs-edn
+  "{:dev-http {3000 {:roots [\"resources/public\" \"frontend-target/dev/public\"]}}
+ :builds   {:dev {}}}")
+
+(def system-ns
+  "(ns my-app.backend.system
+  (:require
+   [donut.system :as ds]))
+
+(defmethod ds/named-system :base
+  [_]
+  {::ds/defs {}})")
+
 (deftest install-test
-  (let [[deps-edn shadow-cljs system-require system-plugin package-json]
+  (let [[deps scripts default-scripts roots target system-require system-plugin]
         (dg/generate
          ::sut/install
          {:top             "my-app"
           :gen-lib-version "0.0.1"}
-         {:read-point      (dg/read-point-test-fn
-                            {::sut/deps.edn        "{:deps {org.clojure/clojure {:mvn/version \"1.12.0\"}}}"
-                             ::sut/shadow-cljs.edn "{:builds {:dev {}}}"
-                             ::sut/system-require  "(ns my-app.backend.system
-  (:require
-   [donut.system :as ds]))"
-                             ::sut/system-plugin   "(ns my-app.backend.system
-  (:require
-   [donut.system :as ds]))
-
-(defmethod ds/named-system :base
-  [_]
-  {::ds/defs {}})"})
-          :read-json-point (dg/read-json-point-test-fn
-                            {::sut/package.json "{\"scripts\": {\"shadow:watch\": \"shadow-cljs watch dev\"}}"})
-          :write-point     dg/write-point-test})]
+         {:read-point  (dg/read-point-test-fn
+                        {::sut/deps.edn                deps-edn
+                         ::sut/deps.edn-script         deps-edn
+                         ::sut/deps.edn-default-script deps-edn
+                         ::sut/shadow-cljs.edn-roots   shadow-cljs-edn
+                         ::sut/shadow-cljs.edn-target  shadow-cljs-edn
+                         ::sut/system-require          system-ns
+                         ::sut/system-plugin           system-ns})
+          :write-point dg/write-point-test})]
 
     (testing "adds app-devtools dep to deps.edn"
-      (is (= {:file-path "deps.edn"
-              :contents  "{:deps {org.clojure/clojure {:mvn/version \"1.12.0\"}
-        party.donut/app-devtools {:mvn/version \"0.0.1\"}}}"}
-             deps-edn)))
+      (is (= "deps.edn" (:file-path deps)))
+      (is (= {:mvn/version "0.0.1"}
+             (get-in (edn/read-string (:contents deps)) [:deps 'party.donut/app-devtools]))))
 
-    (testing "adds app-devtools build target to shadow-cljs.edn"
-      (is (= "shadow-cljs.edn" (:file-path shadow-cljs)))
-      (is (str/includes? (:contents shadow-cljs) ":app-devtools\n"))
-      (is (str/includes? (:contents shadow-cljs) ":init-fn donut.app-devtools.frontend.core/init")))
+    (testing "declares the app-devtools shadow build as a :donut/scripts script"
+      (is (= {:shadow-build :app-devtools}
+             (get-in (edn/read-string (:contents scripts)) [:donut/scripts :scripts "app-devtools"]))))
+
+    (testing "runs the app-devtools script by default"
+      (is (= ["dev" "tailwind:watch" "app-devtools"]
+             (get-in (edn/read-string (:contents default-scripts)) [:donut/scripts :default]))))
+
+    (testing "adds the app-devtools output to the dev-http roots"
+      (is (= ["resources/public" "frontend-target/dev/public" "frontend-target/app-devtools/public"]
+             (get-in (edn/read-string (:contents roots)) [:dev-http 3000 :roots]))))
+
+    (testing "adds an app-devtools build that compiles under bakery's embedded shadow-cljs"
+      (let [build (get-in (edn/read-string (:contents target)) [:builds :app-devtools])]
+        (is (= 'donut.app-devtools.frontend.core/init (get-in build [:modules :app-devtools :init-fn])))
+        (is (= #{'donut.bakery.inject} (get-in build [:compiler-options :cache-blockers])))
+        (is (not (contains? build :build-hooks)))))
 
     (testing "adds app-devtools plugin require to system ns"
       (is (= {:file-path "src/my_app/backend/system.clj"
-              :contents  "(ns my-app.backend.system
-  (:require
-   [donut.system :as ds]
-   [donut.app-devtools.plugin :as app-devtools-plugin]))"}
+              :contents  (str/replace-first system-ns
+                                            "[donut.system :as ds])"
+                                            "[donut.system :as ds]\n   [donut.app-devtools.backend.plugin :as app-devtools-plugin])")}
              system-require)))
 
     (testing "adds app-devtools plugin to base system"
       (is (= {:file-path "src/my_app/backend/system.clj"
-              :contents  "(ns my-app.backend.system
-  (:require
-   [donut.system :as ds]))
-
-(defmethod ds/named-system :base
-  [_]
-  {::ds/defs {}
-   :donut.system/plugins [app-devtools-plugin/app-devtools-plugin]})"}
-             system-plugin)))
-
-    (testing "adds app-devtools to package.json shadow:watch script"
-      (is (= {:file-path "package.json"
-              :contents  "{\n  \"scripts\" : {\n    \"shadow:watch\" : \"shadow-cljs watch dev app-devtools\"\n  }\n}"}
-             package-json)))))
-
-(deftest add-app-devtools-to-shadow-watch-test
-  (is (= "shadow-cljs watch dev app-devtools"
-         (sut/add-app-devtools-to-shadow-watch "shadow-cljs watch dev" "app-devtools")))
-  (testing "does not add app-devtools twice"
-    (is (= "shadow-cljs watch dev app-devtools"
-           (sut/add-app-devtools-to-shadow-watch "shadow-cljs watch dev app-devtools" "app-devtools")))))
+              :contents  (str/replace-first system-ns
+                                            "{::ds/defs {}}"
+                                            "{::ds/defs {}\n   :donut.system/plugins [app-devtools-plugin/app-devtools-plugin]}")}
+             system-plugin)))))

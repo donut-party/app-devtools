@@ -1,6 +1,6 @@
 (ns donut.app-devtools.frontend.core
   (:require
-   [donut.compiler.monolith.inject :as inject]
+   [donut.bakery.inject :as inject]
    [donut.frontend.config :as dconf]
    [donut.frontend.core.flow :as dcf]
    [donut.frontend.core.utils :as dcu]

@@ -3,7 +3,7 @@
    [aero.core :as aero]
    [clojure.java.io :as io]
    [donut.app-devtools.backend.plugin :as app-devtools-plugin]
-   [donut.compiler.monolith.registry :as monolith-registry]
+   [donut.bakery.registry :as dbr]
    [donut.endpoint.middleware :as dem]
    [donut.endpoint.router :as der]
    [donut.system :as ds]
@@ -65,7 +65,7 @@
                     :migration-dir "migrations"}}}
 
     :background
-    {:route-registry monolith-registry/RouteRegistryComponent}}
+    {:route-registry dbr/RouteRegistryComponent}}
 
    ::ds/plugins [app-devtools-plugin/app-devtools-plugin]})
 

@@ -1,10 +1,8 @@
 {
   "scripts": {
-    "shadow:watch": "shadow-cljs watch dev app-devtools ext",
-    "shadow:release": "shadow-cljs release app",
-    "tailwind:watch": "tailwindcss -i ./src/css/tailwind.css -o ./resources/public/css/main.css --watch",
-    "dev": "clojure -M:dev:cljs:framework-dev:monolith -m donut.compiler.monolith.dev dev app-devtools",
-    "release": "clojure -M:dev:cljs:framework-dev:monolith -m donut.compiler.monolith.release"
+    "dev": "clojure -M:dev:cljs:framework-dev:bakery",
+    "release": "clojure -X:cljs:framework-dev:release && npm run tailwind:release",
+    "tailwind:release": "tailwindcss -i ./src/css/tailwind.css -o ./resources/public/css/main.css --minify"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
@@ -27,7 +25,6 @@
     "cross-env": "^7.0.3",
     "cssnano": "^6.0.0",
     "daisyui": "^5.5.19",
-    "npm-run-all": "^4.1.5",
     "shadow-cljs": "2.28.12"
   }
 }

@@ -26,7 +26,7 @@
       (restart* path))))
 
 (def watcher
-  (when-not (System/getProperty "donut.monolith")
+  (when-not (System/getProperty "donut.bakery.dev")
     (beholder/watch (restart *ns*) "src" "resources" "dev/src" "test")))
 
 (comment

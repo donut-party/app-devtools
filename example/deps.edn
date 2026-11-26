@@ -12,7 +12,7 @@
          org.xerial/sqlite-jdbc            {:mvn/version "3.36.0.3"}
 
          party.donut/app-devtools         {:local/root "../"}
-         party.donut/compiler-monolith    {:local/root "../../donut-compiler/03-single-jvm/lib"}
+         party.donut/bakery               {:local/root "../../bakery"}
          party.donut/compose              {:mvn/version "0.0.30"}
          party.donut/datapotato           {:mvn/version "1.0.457"}
          party.donut/datapotato-next-jdbc {:mvn/version "1.0.457"}
@@ -29,6 +29,17 @@
          com.taoensso/telemere-slf4j {:mvn/version "1.2.1"}
          }
 
+ ;; what `npm run dev` (clojure -M:dev:cljs:framework-dev:bakery) starts
+ ;; next to the backend and nREPL. Pass names or globs to pick others.
+ :donut/scripts
+ {:default ["dev" "app-devtools" "tailwind:watch"]
+  :scripts {"dev"            {:shadow-build :dev}
+            "app-devtools"   {:shadow-build :app-devtools}
+            "tailwind:watch" {:cmd ["npx" "tailwindcss"
+                                    "-i" "./src/css/tailwind.css"
+                                    "-o" "./resources/public/css/main.css"
+                                    "--watch"]}}}
+
  :aliases
  {:dev
   {:extra-deps  {com.nextjournal/beholder    {:mvn/version "1.0.0"}
@@ -37,9 +48,18 @@
                  ring/ring-mock              {:mvn/version "0.4.0"}}
    :extra-paths ["dev/src" "test"]}
 
-  :monolith
-  {:extra-deps {nrepl/nrepl {:mvn/version "1.3.1"}}
-   :jvm-opts   ["-Ddonut.monolith=1" "-Xmx2g"]}
+  ;; local development in one JVM: backend system, nREPL, embedded
+  ;; shadow-cljs and the :donut/scripts above.
+  ;; clojure -M:dev:cljs:framework-dev:bakery
+  :bakery
+  {:main-opts ["-m" "donut.bakery.dev"]}
+
+  ;; production cljs build with the backend routes baked in.
+  ;; clojure -X:cljs:framework-dev:release
+  :release
+  {:exec-fn   donut.bakery.release/release
+   :exec-args {:system-ns "app-devtools.example.backend.system"
+               :builds    [:app]}}
 
   :framework-dev {:override-deps {party.donut/datapotato           {:local/root "../../datapotato/datapotato"}
                                   party.donut/datapotato-next-jdbc {:local/root "../../datapotato/datapotato-next-jdbc"}
@@ -48,7 +68,6 @@
                                   party.donut/frontend             {:local/root "../../frontend"}
                                   party.donut/generate             {:local/root "../../generate"}
                                   party.donut/generators           {:local/root "../../generators"}
-                                  party.donut/routes               {:local/root "../../routes"}
                                   party.donut/sugar                {:local/root "../../sugar"}
                                   party.donut/system               {:local/root "../../system"}}}
 

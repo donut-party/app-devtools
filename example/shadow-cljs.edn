@@ -1,5 +1,5 @@
 ;; shadow-cljs configuration
-{:deps           {:aliases [:cljs :dev :framework-dev :monolith]}
+{:deps           {:aliases [:cljs :dev :framework-dev]}
  :dev-http       {3000 {:roots     ["resources/public" "frontend-target/dev/public" "frontend-target/app-devtools/public"]
                         :proxy-url "http://localhost:3010"
                         :push-state/headers {"Cross-Origin-Opener-Policy" "same-origin-allow-popups"}}}
@@ -15,8 +15,7 @@
                                                         day8.re-frame.tracing.trace-enabled? true}
                               ;; this is specifically for the warning in loom/alg_generic:494.
                               :warnings                {:invalid-arithmetic false}
-                              :cache-blockers          #{donut.compiler.monolith.inject}}
-           :build-hooks      [(donut.frontend.routes/write-frontend-routes-hook app-devtools.example.frontend.frontend-routes/routes)]
+                              :cache-blockers          #{donut.bakery.inject}}
 
            :modules
            {:main {:entries [app-devtools.example.frontend.core]
@@ -36,7 +35,8 @@
           {:target           :browser
            :output-dir       "frontend-target/app/public/js"
            :asset-path       "/js"
-           :compiler-options {:warnings {:invalid-arithmetic false}}
+           :compiler-options {:warnings       {:invalid-arithmetic false}
+                              :cache-blockers #{donut.bakery.inject}}
            :modules
            {:main {:entries [app-devtools.example.frontend.core]
                    :init-fn app-devtools.example.frontend.core/init}}}
@@ -52,8 +52,7 @@
                                                         day8.re-frame.tracing.trace-enabled? true}
                               ;; this is specifically for the warning in loom/alg_generic:494.
                               :warnings                {:invalid-arithmetic false}
-                              :cache-blockers          #{donut.compiler.monolith.inject}}
-           :build-hooks      [(donut.frontend.routes/write-frontend-routes-hook app-devtools.example.frontend.frontend-routes/routes)]
+                              :cache-blockers          #{donut.bakery.inject}}
 
            :modules
            {:app-devtools {:entries [donut.app-devtools.frontend.core]

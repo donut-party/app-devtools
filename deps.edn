@@ -22,6 +22,10 @@
          party.donut/sugar                {:mvn/version "0.0.19"}
          party.donut/system               {:mvn/version "1.0.258"}
 
+         ;; donut.app-devtools.frontend.core reads the app's backend routes
+         ;; with donut.bakery.inject/backend-routes
+         party.donut/bakery {:mvn/version "1.0.6"}
+
          ring/ring          {:mvn/version "1.9.4"}
          ring/ring-defaults {:mvn/version "0.3.3"}}
 
@@ -30,26 +34,26 @@
              :github         "donut-party/app-devtools"
              :version-prefix "0.0"}
 
- ;; party.donut/compiler-monolith is :local/root only (never published to
- ;; Maven), so it's alias-scoped rather than a top-level :deps entry —
- ;; build.clj's basis for jar/pom generation ignores aliases entirely, so
- ;; keeping it here means it never leaks into app-devtools's published pom.
- ;; Consuming apps (e.g. template-test) must declare it themselves; app-devtools
- ;; being a :local/root or :mvn dependency doesn't propagate it for them.
+ ;; what `clojure -M:dev:cljs:framework-dev:bakery` starts next to the
+ ;; backend and nREPL (see donut.bakery.scripts)
+ :donut/scripts
+ {:default ["dev"]
+  :scripts {"dev" {:shadow-build :dev}}}
+
  :aliases
  {:dev
-  {:extra-deps  {com.nextjournal/beholder      {:mvn/version "1.0.0"}
-                 djblue/portal                 {:mvn/version "0.51.0"}
-                 org.clojure/tools.namespace    {:mvn/version "1.1.0"}
-                 party.donut/compiler-monolith {:local/root "../donut-compiler/03-single-jvm/lib"}
-                 ring/ring-mock                {:mvn/version "0.4.0"}}
+  {:extra-deps  {com.nextjournal/beholder    {:mvn/version "1.0.0"}
+                 djblue/portal               {:mvn/version "0.51.0"}
+                 org.clojure/tools.namespace {:mvn/version "1.1.0"}
+                 ring/ring-mock              {:mvn/version "0.4.0"}}
    :extra-paths ["dev/src" "test"]}
 
-  :monolith
-  {:extra-deps {nrepl/nrepl {:mvn/version "1.3.1"}}
-   :jvm-opts   ["-Ddonut.monolith=1" "-Xmx2g"]}
+  ;; one JVM: backend system, nREPL, embedded shadow-cljs and :donut/scripts
+  :bakery
+  {:main-opts ["-m" "donut.bakery.dev"]}
 
-  :framework-dev {:override-deps {party.donut/datapotato           {:local/root "../datapotato/datapotato"}
+  :framework-dev {:override-deps {party.donut/bakery               {:local/root "../bakery"}
+                                  party.donut/datapotato           {:local/root "../datapotato/datapotato"}
                                   party.donut/datapotato-next-jdbc {:local/root "../datapotato/datapotato-next-jdbc"}
                                   party.donut/dbxray               {:local/root "../dbxray"}
                                   party.donut/endpoint             {:local/root "../endpoint"}
@@ -57,7 +61,6 @@
                                   party.donut/frontend             {:local/root "../frontend"}
                                   party.donut/generate             {:local/root "../generate"}
                                   party.donut/generators           {:local/root "../generators"}
-                                  party.donut/routes               {:local/root "../routes"}
                                   party.donut/sugar                {:local/root "../sugar"}
                                   party.donut/system               {:local/root "../system"}}}
 
