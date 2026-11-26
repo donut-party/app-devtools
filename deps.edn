@@ -24,7 +24,7 @@
 
          ;; donut.app-devtools.frontend.core reads the app's backend routes
          ;; with donut.bakery.inject/backend-routes
-         party.donut/bakery {:mvn/version "1.0.6"}
+         party.donut/bakery {:mvn/version "1.0.7"}
 
          ring/ring          {:mvn/version "1.9.4"}
          ring/ring-defaults {:mvn/version "0.3.3"}}
